@@ -11,13 +11,12 @@ class RewardCalculator():
 
     def __init__(self, threshold: float = 0.70):
         self.trajectories = []
-        self.semantic_model = SentenceTransformer("BAAI/bge-small-zh-v1.5", device="cpu")
         self.threshold = threshold
         self.process_flag = False
         self.judge_prompt = """你是一名资深刑事/民事审判法官。本轮评估中，你需要对智能体（RL Agent，如公诉人/诉讼代理人）在【一场完整多轮法庭辩论】中的【每一轮发言（Agent Turn）】进行细粒度的质量评估与定性评分。
 
         【重要原则】：
-        1. 案情事实与法律条文的覆盖率（$P_{frac}$）已由底层系统独立计算，你【不需要】考核是否提到了法条，只需【严格按照阶梯标准】评估辩论逻辑、反驳针对性、涵摄质量以及跨轮次的逻辑连贯性。
+        1.  你【不需要】考核是否提到了法条，只需【严格按照阶梯标准】评估辩论逻辑、反驳针对性、涵摄质量以及跨轮次的逻辑连贯性。
         2. 【客观独立评分】：请结合对话上下文，对智能体的【每一轮发言】分别进行独立打分。不同轮次的发言质量可能存在起伏，请准确识别出质量较高或较低的轮次，【切勿对所有轮次打出完全相同的分数】。
 
         =========================================
@@ -73,37 +72,37 @@ class RewardCalculator():
         步骤 2: 遍历智能体的【每一轮发言】（如 Agent Turn 1, Agent Turn 2...），依据阶梯标准给出 4 个维度的打分 (0.0 - 1.0)、违规标记及阶梯打分理由。
 
         严格按以下 JSON 格式输出评估结果:
-        {
+        {{
         "dialogue_overall_summary": "智能体整体辩论逻辑连贯，但在 Turn 2 中面对对手关于主观故意的辩解时反驳力道不足。",
-        "turn_evaluations": {
-            "Agent Turn 1": {
-            "scores": {
+        "turn_evaluations": {{
+            "Agent Turn 1": {{
+            "scores": {{
                 "Q_rebuttal": 0.8,
                 "Q_subsumption": 0.9,
                 "Q_logic": 0.9,
                 "Q_rhetoric": 0.9
-            },
-            "penalties": {
+            }},
+            "penalties": {{
                 "stuffing_penalty": false,
                 "hallucination_penalty": false
-            },
+            }},
             "tier_reasoning": "开庭阐述明确，精准将发票证据涵摄入诈骗罪要件，逻辑严密。"
-            },
-            "Agent Turn 2": {
-            "scores": {
+            }},
+            "Agent Turn 2": {{
+            "scores": {{
                 "Q_rebuttal": 0.4,
                 "Q_subsumption": 0.6,
                 "Q_logic": 0.8,
                 "Q_rhetoric": 0.8
-            },
-            "penalties": {
+            }},
+            "penalties": {{
                 "stuffing_penalty": false,
                 "hallucination_penalty": false
-            },
+            }},
             "tier_reasoning": "反驳属0.4-0.7阶梯：仅重复了第一轮的立场，未能有效击中 Opponent Turn 1 中提到的‘不知情’辩解。"
-            }
-        }
-        }"""
+            }}
+        }}
+        }}"""
 
     def sentence_split(self, text: str):
         split = re.split(r"[。！？\n；]", text)
@@ -119,22 +118,19 @@ class RewardCalculator():
     def group_semantic_eval(self, process, trajectories):
 
 
-        with torch.no_grad():
-            process_embeddings = self.model.encode(
-                process, 
-                convert_to_tensor=True, 
-                show_progress_bar=False
-            )
+
         
         results = []
         # for each existing trajectory of the episode
-        count = 0
-        if t.law_check == True:
-            count = 1
+
+  
         for t in trajectories:
+            
+
             traj_milestones = []
-            for a in t.achieved_milestones:
-                traj_milestones.append((a[0], 1))
+            print(t.achieved_milestones)
+            for k, v in t.achieved_milestones:
+                traj_milestones.append((k, 1/(len(t.milestones)+1)))
             results.append(traj_milestones)
 
         return results
@@ -246,25 +242,34 @@ class RewardCalculator():
         count = 0
         for t in trajectories:
             traj_results = []
-            full_prompt = t.get_prompt()
+            full_prompt = t.rl_prompt
 
             # concatenate the judge_prompt with the full_prompt
 
             current_prompt = self.judge_prompt.format(case_facts = fact, dialogue_history = full_prompt)
-            output = utils.chat_json(self.current_prompt, "Deepseek V3")
+            output = utils.chat_json("deepseek/deepseek-chat", current_prompt)
+            turn_evals = output.get("turn_evaluations", {})
+
 
             # process answers from json output
+            for key in turn_evals:
+                turn_data = turn_evals[key]
+                scores = turn_data.get("scores", {})
 
-            for o in output:
-                count += 1
                 # Weighted Calculation
-                total_score = 0.5 * o["Q_rebuttal"] + 0.25 * o["Q_subsumption"] + 0.15 * o["Q_logic"] + 0.1 * ["Q_rhetoric"]
-
+                total_score = 0.5 * float(scores.get("Q_rebuttal", 0.0)) + \
+                0.25 * float(scores.get("Q_subsumption", 0.0)) + 0.15 * float(scores.get("Q_logic", 0.0)) + \
+                 0.1 * float(scores.get("Q_rhetoric", 0.0))
                 traj_results.append(total_score)
+                
 
+            traj_np = np.array(traj_results)
+            # Get overall quality of the dialogue at each step
+            running_mean = np.cumsum(traj_np) / np.arange(1, len(traj_np) + 1)
+            scaled = [x / len(running_mean) for x in running_mean]
+            results.append(scaled)
+            
 
-            results.append(sum(traj_results)/len(traj_results))
-    
         return results
 
                 

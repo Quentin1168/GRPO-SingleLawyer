@@ -4,6 +4,8 @@ import numpy as np
 import cn2an
 import re
 import torch
+from sentence_transformers import util
+import ast
 
 
 class Trajectory():
@@ -18,15 +20,23 @@ class Trajectory():
         self.prompt = fact
         self.rl_response = ""
         self.static_response = ""
-        self.achieved_milestones = {}
-        self.current_turn = 0
+        self.achieved_milestones = []
+        self.achieved_set = set()
+        self.turn = 0
         self.token_log = []
         self.law_check = False
+        
+
         
         self.done = False
 
     def build_RL(self):
-        init = "You are this case's plaintiff lawyer, argue in favour of prosecution based on the facts below: {fact}\n This is the debate so far:".format(self.fact)
+        init = f"你是本案的原告律师，请根据以下事实进行控方辩论：\n{self.fact}\n\n 【工具使用说明】\n" \
+            f"你在辩论过程中可以使用检索工具查询相关法律法规或案事实细节。\n" \
+            f"当你需要进行检索时，请在回答中使用 `<search>案情特征或法律争议点描述</search>` 格式。\n" \
+            f"注意：检索时请提交与案情事实、行为性质或争议焦点相关的上下文描述（而非直接搜索具体法条名称），以便系统为你匹配最相关的法律依据。\n" \
+            f"例如：`<search>未经同意秘密转移他人财物 盗窃罪认定与量刑标准</search>` 或 `<search>合同到期拒绝履行还款义务 违约金与利息计算</search>`。\n" \
+            f"系统会自动拦截你的检索请求并为你提供相关法条/证据，之后你可以继续进行辩论。\n\n 目前的辩论进展如下："
         RL_history = [
             {"role": "system", "content": init}
         ]
@@ -34,7 +44,9 @@ class Trajectory():
 
     
     def build_static(self):
-        init = "You are this case's defendant lawyer, argue in favour of defence based on the facts below: {fact}\n This is the debate so far:".format(self.fact)
+        init = f"你是本案的被告律师，请根据以下事实为辩方进行辩论：\n{self.fact}\n\n"
+        "请对原告律师的发言进行有针对性的反驳与辩护。"
+        "目前的辩论进展如下："
         static_history = [
             {"role": "system", "content": init}
         ]
@@ -42,15 +54,16 @@ class Trajectory():
 
     def update_token_log(self, token, type):
         if type == 'RL':
-            self.token_log.append({"Agent" : token})
+            self.token_log.append({"RL" : token, "Turn": self.turn})
         elif type == 'RAG':
-            self.token_log.append({"RAG" : token})
+            self.token_log.append({"RAG" : token, "Turn": self.turn})
         else:
-            self.token_log.appenmd({"Opponent" : token})
+            self.token_log.append({"Opponent" : token, "Turn": self.turn})
 
 
     def update_prompt(self, type):
         if type == "RL":
+            print(f"RAW MODEL OUTPUT:\n{repr(self.rl_response)}")
             self.rl_prompt.append({"role": "assistant", "content": self.rl_response})
             self.static_prompt.append({"role": "user", "content": self.rl_response})
         else:
@@ -59,22 +72,23 @@ class Trajectory():
 
     def set_RL_response(self, res):
         self.rl_response = res     
+        
 
     def set_static_response(self):
-        self.static_repsonse = utils.chat(
-            system = "You are this case's defendant lawyer.", 
-            model = "Deepseek-V3", 
+        self.static_response = utils.chat(
+            system = "你是本案的被告律师", 
+            model = "deepseek/deepseek-chat", 
             user=self.rl_prompt, 
-            temperature = 0.0).choices[0].message.content
+            temperature = 0.0)
 
     def get_static_response(self):
         return self.static_response
 
 
     def add_milestone(self, milestone):
-        self.achieved_milestones[self.turn] = milestone
-
-        if self.milestones == self.achieved_milestones:
+        self.achieved_milestones.append((self.turn, milestone))
+        self.achieved_set.add(milestone)
+        if set(self.milestones).issubset(self.achieved_set) or self.milestones == self.achieved_set:
             self.done = True
     
     # Note, need to move the process milestone shit to here, since episode ending is conditional to it as well.
@@ -102,7 +116,10 @@ class Trajectory():
 
     def law_checker(self):
         translated_text = cn2an.transform(self.rl_response)
-        if self.law in translated_text:
+        print("CHECKING LAW:")
+        law_numbers = re.findall(r'\d+', self.law)
+        if law_numbers[0] in translated_text:
+            print("LAW FOUND")
             self.add_milestone(self.law)
             self.law_check = True
         
@@ -120,26 +137,28 @@ class Trajectory():
 
 class Episode():
 
-    def __init__(self, fact, milestones, size, max_turns, law, tokeniser, semantic_model):
+    def __init__(self, fact, milestones, law, size, max_turns, tokeniser, semantic_model, device):
+        self.device = device
         self.size = size
         self.fact = fact
-        self.milestones = milestones
+        self.milestones = ast.literal_eval(milestones)
+        self.law = law
         self.threshold = 0.70
         self.max_turns = max_turns
-        self.trajectories = [Trajectory(fact, milestones, t) for t in range(size)]
+        self.trajectories = [Trajectory(self.fact, self.milestones, t ,self.law) for t in range(size)]
         self.active_trajectories = self.trajectories
         self.semantic_model = semantic_model
         self.process_embeddings = self.semantic_model.encode(
                 self.milestones, 
-                convert_to_tensor=True, 
+                convert_to_tensor=True,
+                normalize_embeddings=True,
                 show_progress_bar=False
         )
-
         self.law = law
 
         self.tokeniser = tokeniser
 
-        self.rag_db = utils.LawRetriever("")
+        self.rag_db = utils.LawRetriever("law.json", self.device)
 
     def sentence_split(self, text: str):
         split = re.split(r"[。！？\n；]", text)
@@ -161,31 +180,35 @@ class Episode():
             for s in split:
                 sentences.append(s)
                 index.append(n)
+        
+
+        if not sentences:
+            return
             
 
-        sentence_embeddings = self.model.encode(
+        sentence_embeddings = self.semantic_model.encode(
             sentences,
             convert_to_tensor=True,
             normalize_embeddings=True,
             show_progress_bar=False
         )
 
-        similarity_matrix = np.dot(self.process_embeddings, sentence_embeddings.T)
+        similarity_matrix = util.cos_sim(sentence_embeddings, self.process_embeddings)
+
         for s, i in enumerate(index):
 
-            trajectory = self.trajectories[i]
-            saved_milestones = trajectory.achieved_milestones
+            trajectory = self.active_trajectories[i]
+            saved_milestones = trajectory.achieved_set
 
-            sim = similarity_matrix[i]
+            sim = similarity_matrix[s]
             for j, k in enumerate(self.milestones):
-                if k in saved_milestones.values():
+                if k in saved_milestones:
                     continue
 
                 similarity = sim[j].item()
                 if similarity >= self.threshold:
                     trajectory.add_milestone(k)
-                    if trajectory.get_finished() == True:
-                        self.active_trajectories.remove(trajectory)
+                    
 
 
     def batch_trajectory_rollout(self, model):
@@ -197,21 +220,28 @@ class Episode():
                 
 
             # format trajectory prompts for Qwen model compatability
+
+            formatted_prompts = []
             for t in self.active_trajectories:
 
-                formatted_prompts = [self.tokeniser.apply_chat_template(t.rl_prompt, tokenize = False, add_generation_prompt=True)]
+                formatted_prompts.append(self.tokeniser.apply_chat_template(t.rl_prompt, tokenize = False, add_generation_prompt=True, enable_thinking=False ))
 
-            inputs = self.tokeniser(formatted_prompts, return_tensors = "pt", padding=True).to("gpu")
+            inputs = self.tokeniser(formatted_prompts, 
+                return_tensors = "pt", 
+                padding=True,
+                truncation=True,        # <--- Prevents input tokens from exceeding max length
+                max_length=8192
+            ).to(self.device)
 
             with torch.no_grad():
                 outputs = model.generate(
                     **inputs,
-                    max_new_tokens=250,
+                    max_new_tokens=512,
                     temperature=0.7,
                     do_sample=True,
                     pad_token_id=self.tokeniser.pad_token_id
             )
-
+            
             prompt_len = inputs["input_ids"].shape[1]
 
             # process outputs of trajectories
@@ -241,9 +271,15 @@ class Episode():
 
                 rag_prompts = []
                 for t in q_traj:
-                    rag_prompts.append(self.tokeniser.apply_chat_template(t.history, tokenize=False, add_generation_prompt=True))
+                    rag_prompts.append(self.tokeniser.apply_chat_template(t.rl_prompt, tokenize=False, add_generation_prompt=True))
 
-                rag_inputs = self.tokeniser(rag_prompts, return_tensors="pt", padding=True).to("gpu")
+                rag_inputs = self.tokeniser(
+                    rag_prompts, 
+                    return_tensors="pt", 
+                    padding=True,
+                    truncation=True,
+                    max_length=8192 - 250
+                ).to(self.device)
                 
 
                 # Generate another output addressing the retrieved RAG laws
@@ -251,7 +287,8 @@ class Episode():
                     rag_outputs = model.generate(
                         **rag_inputs,
                         max_new_tokens = 250,
-                        temperature = 0.7
+                        temperature = 0.7,
+                        pad_token_id=self.tokeniser.pad_token_id
                 )
 
                 # No mask for later training
@@ -259,7 +296,7 @@ class Episode():
                 prompt_len_2 = rag_inputs["input_ids"].shape[1]
 
                 for i, t in enumerate(q_traj):
-                    output_tokens_2 = outputs[i, prompt_len:].tolist()
+                    output_tokens_2 = rag_outputs[i, prompt_len_2:].tolist()
                     tokens_2 = [tok for tok in output_tokens if tok != self.tokeniser.pad_token_id]
                     output_text_2 = self.tokeniser.decode(tokens, skip_special_tokens=True)
 
@@ -274,10 +311,11 @@ class Episode():
                     if t.law_check == False:
                         t.law_checker()
                 
-                for t in self.active_trajectories:
-                    t.turn += 1
+            
 
             self.batch_milestone_checker()
+
+            self.active_trajectories = [t for t in self.active_trajectories if not t.get_finished() or not t.law_check]
 
             if not self.active_trajectories: 
                 break
@@ -287,21 +325,19 @@ class Episode():
 
                 res2 = list(executor.map(lambda t: (t, t.get_static_response()), self.active_trajectories))
 
+
             for t, r in res2:
+                t.update_prompt("static")
                 static_tokens = self.tokeniser.encode(r, add_special_tokens=False)
                 t.update_token_log(static_tokens, "static")
-
-                
-
-            
         
-        for t in self.active_trajectories:
-            if not t.done:
-                t.done = True
-
+            for t in self.active_trajectories:
+                if not t.done:
+                    t.done = True
+                t.turn += 1
     def inject_rag_context(self, trajectory, retrieved):
         database_result = f"[Database Result]:\n {retrieved}"
 
         trajectory.rl_prompt.append({"role": "system", "content": database_result})
 
-        trajectory.update_token_log(self.tokeniser.encode(database_result, add_special_tokens=False), source="RAG")
+        trajectory.update_token_log(self.tokeniser.encode(database_result, add_special_tokens=False), type="RAG")

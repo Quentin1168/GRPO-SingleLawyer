@@ -25,10 +25,10 @@ def chat(system: str, model: str, user: str, temperature: float = TEMPERATURE) -
     return resp.choices[0].message.content.strip()
 
 
-def chat_json(system: str, model, user: str) -> dict:
+def chat_json(model, user: str) -> dict:
     """Chat call that must return a JSON object; retries once on parse failure."""
     for _ in range(3):
-        raw = chat(system + "\n你必须只输出一个合法的JSON对象，不要输出其他任何内容。",
+        raw = chat("\n你必须只输出一个合法的JSON对象，不要输出其他任何内容。",
                    model, user, temperature=0.2)
         try:
             # strip markdown fences if present
@@ -41,12 +41,13 @@ def chat_json(system: str, model, user: str) -> dict:
 class LawRetriever:
     """ retrieval over the law-article JSON file."""
 
-    def __init__(self, json_path):
+    def __init__(self, json_path, device):
 
-        self.model = SentenceTransformer("BAAI/bge-small-zh-v1.5", device="gpu")
+        self.model = SentenceTransformer("BAAI/bge-small-zh-v1.5", device="cpu")
 
         with open(json_path, encoding="utf-8") as f:
-            self.laws = json.load(f)
+            laws = json.load(f)
+        self.laws = {value: key for key, value in laws.items()}
 
         self.keys = list(self.laws.keys())
         # index on "article name + article text" so searches by number also work
@@ -71,28 +72,29 @@ class LawRetriever:
             show_progress_bar=False
         )
 
-        similarity_matrix = util.cosine_similarity(query_embeddings, self.corpus_embeddings)
+        similarity_matrix = util.cos_sim(query_embeddings, self.corpus_embeddings)
 
         res = []
 
         for i in range(len(query)):
 
-            topk = torch.top_k(similarity_matrix[i], k=top_k)
+            tk = torch.topk(similarity_matrix[i], k=top_k)
 
-            best_res = topk.indices[0].item()
+            best_res = tk.indices[0].item()
 
-            res.append(self.corpus[best_res])
+            res.append(self.corpus_embeddings[best_res])
 
         return res
 
-    def format_results(results: list[tuple[str, str]]) -> str:
+    def format_results(self, results: list[tuple[str, str]]) -> str:
         if not results:
             return "（未检索到相关法条）"
         return "\n".join(f"【{k}】{v}" for k, v in results)
 
-    def extract_search_query(text: str) -> str | None:
+    def extract_search_query(self, text: str) -> str | None:
         """Extracts query from <search>query</search> tags."""
         match = re.search(r'<search>(.*?)</search>', text, re.DOTALL)
         if match:
+            print("search was found")
             return match.group(1).strip()
         return None
