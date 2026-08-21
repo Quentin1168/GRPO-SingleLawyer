@@ -1,49 +1,62 @@
 import json
-from openai import OpenAI
+from openai import OpenAI, RateLimitError
 import jieba
 from sentence_transformers import SentenceTransformer, util
 import re
 import torch
+import time, random
 
 TEMPERATURE = 0
 API_BASE_URL = "https://openrouter.ai/api/v1"
-API_KEY = "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"
+API_KEY = ""
 MEMORY_TOP_K = 10
 RAG_TOP_K = 5
 _client = OpenAI(base_url=API_BASE_URL, api_key=API_KEY)
+MAX_RETRIES = 5
 
-
-def chat(system: str, model: str, user: str, temperature: float = TEMPERATURE) -> str:
-    resp = _client.chat.completions.create(
-        model = model,
-        temperature=temperature,
-        messages=[
-            {"role": "system", "content": system},
-            {"role": "user", "content": user},
-        ],
-    )
-    return resp.choices[0].message.content.strip()
-
-
-def chat_json(model, user: str) -> dict:
-    """Chat call that must return a JSON object; retries once on parse failure."""
-    for _ in range(3):
-        raw = chat("\n你必须只输出一个合法的JSON对象，不要输出其他任何内容。",
-                   model, user, temperature=0.2)
+def chat(system, model, user, temperature=TEMPERATURE, client=_client,
+         max_tokens=400):                                   
+    for attempt in range(MAX_RETRIES):
         try:
-            # strip markdown fences if present
-            raw = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```")
-            return json.loads(raw)
+            resp = client.chat.completions.create(
+                model=model, temperature=temperature, max_tokens=max_tokens,
+                messages=[{"role": "system", "content": system},
+                          {"role": "user", "content": user}],
+            )
+            return resp.choices[0].message.content.strip()
+        except RateLimitError:
+            if attempt == MAX_RETRIES - 1:
+                raise
+            time.sleep((2 ** attempt) + random.uniform(0, 1))   # 1s→2s→4s→8s + jitter
+
+
+def chat_json(model, user: str, max_tokens: int = 4096, client=_client,) -> dict:
+    for _ in range(3):
+        resp = client.chat.completions.create(
+            model=model,
+            temperature=TEMPERATURE,
+            max_tokens=max_tokens,
+            response_format={"type": "json_object"},   # in chat_json's call path only
+            messages=[
+                {"role": "system", "content": "\n你必须只输出一个合法的JSON对象，不要输出其他任何内容。"},
+                {"role": "user", "content": user},
+            ],
+        )
+        raw = resp.choices[0].message.content or ""
+        cleaned = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```")
+        try:
+            
+            return json.loads(cleaned)
         except json.JSONDecodeError:
+            print(f"[chat_json] JSON parse failed, raw tail: ...{raw[-200:]!r}")  # ← make it loud
             continue
     return {}
-
 class LawRetriever:
     """ retrieval over the law-article JSON file."""
 
     def __init__(self, json_path, device):
 
-        self.model = SentenceTransformer("BAAI/bge-small-zh-v1.5", device="cpu")
+        self.model = SentenceTransformer("BAAI/bge-small-zh-v1.5", device=device)
 
         with open(json_path, encoding="utf-8") as f:
             laws = json.load(f)

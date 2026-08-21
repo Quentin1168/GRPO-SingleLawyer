@@ -1,0 +1,5 @@
+# Overrides: force-replace incorrect upstream pins during resolution.
+# openpipe-art 0.5.17 declares torchao==0.15.0, but torchao 0.15 was built
+# for torch 2.9 (cpp extensions fail on our torch 2.10 — pytorch/ao#2919),
+# and unsloth's runtime check requires torchao>=0.16. The ART pin is stale.
+torchao>=0.16,<0.17
