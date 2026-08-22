@@ -9,12 +9,15 @@ import openai
 import utils
 from transformers import AutoTokenizer
 
-MAX_TURNS = 10
-MAX_TOKENS_PER_TURN = 512
+MAX_TURNS = 8
+MAX_TOKENS_PER_TURN = 300
 MAX_TOKENS_RAG_FOLLOWUP = 250
 SIM_THRESHOLD = 0.70                      
 OPPONENT_MODEL = "deepseek/deepseek-chat"
-
+CONTEXT_LEN = 8192
+MAX_NEW_TOKENS = 300
+BUFFER = 64
+MAX_INPUT = CONTEXT_LEN - MAX_NEW_TOKENS - BUFFER
 
 
 RL_SYSTEM_PROMPT = ( 
@@ -31,6 +34,21 @@ RL_SYSTEM_PROMPT = (
 
 class TrajectoryHelper():
 
+    _tokeniser = None
+    _rag_db = None
+
+    @classmethod
+    def _shared_tokeniser(cls):
+        if cls._tokeniser is None:
+            cls._tokeniser = AutoTokenizer.from_pretrained("Qwen/Qwen3-4b")
+        return cls._tokeniser
+
+    @classmethod
+    def _shared_rag_db(cls):
+        if cls._rag_db is None:
+            cls._rag_db = utils.LawRetriever("law.json", "cpu")
+        return cls._rag_db
+
     def __init__(self, id, fact, milestones, law, size, max_turns, model, semantic_model, device):
         self.device = device
         self.size = size
@@ -38,7 +56,7 @@ class TrajectoryHelper():
         self.id = id
         self.milestones = ast.literal_eval(milestones)
         self.law = law
-        self.threshold = 0.90
+        self.threshold = 0.85
         self.max_turns = max_turns
         self.model = model
         self.semantic_model = semantic_model
@@ -49,8 +67,8 @@ class TrajectoryHelper():
                 show_progress_bar=False
         )
         self.model_name = self.model.get_inference_name() 
-        self.rag_db = utils.LawRetriever("law.json", "cpu")
-
+        self.rag_db = self._shared_rag_db()
+        self.tokeniser = self._shared_tokeniser()
         
 
     def sentence_split(self, text: str):
@@ -93,6 +111,11 @@ class TrajectoryHelper():
         law_check = False
 
         for turn in range(self.max_turns):
+            n = len(self.tokeniser.apply_chat_template(trajectory.messages(), \
+                    add_generation_prompt=True, tokenize=True))
+            if n > MAX_INPUT:
+                trajectory.metrics["truncated_by_context"] = 1.0
+                break
             try:
                 reply = await api.chat.completions.create(
                             model=self.model_name,
@@ -120,11 +143,16 @@ class TrajectoryHelper():
                 trajectory.messages_and_choices.append(          
                     {"role": "user", "content": f"[Database Result]:\n {retrieved[0]}"}
                 )
+                n2 = len(self.tokeniser.apply_chat_template(trajectory.messages(), \
+                    add_generation_prompt=True, tokenize=True))
+                if n2 > MAX_INPUT:
+                    trajectory.metrics["truncated_by_context"] = 1.0
+                    break
                 try:
                     query_reply = await api.chat.completions.create(
                                         model=self.model_name,
                                         messages=trajectory.messages(),
-                                        max_completion_tokens=MAX_TOKENS_PER_TURN,
+                                        max_completion_tokens=MAX_TOKENS_RAG_FOLLOWUP,
                                         temperature=0.85,
                                         extra_body={"chat_template_kwargs": {"enable_thinking": False}},
                                     )
@@ -161,14 +189,15 @@ class TrajectoryHelper():
             if len(achieved) == len(self.milestones) and law_check:
                 break
 
-            env_lawyer = await asyncio.to_thread(
-                utils.chat, system="你是本案的被告律师",
+            env_lawyer = await utils.async_chat(
+                system="你是本案的被告律师",
                 model = OPPONENT_MODEL, user=trajectory.messages(), temperature=0.0
             )
 
             trajectory.messages_and_choices.append({"role": "user", "content": env_lawyer})
 
         trajectory.metrics["milestones_achieved"] = float(len(achieved))
+        trajectory.metrics["milestone_frac"] = len(achieved) / max(len(self.milestones), 1)
         trajectory.metrics["law_found"]= float(law_check)
 
         return trajectory

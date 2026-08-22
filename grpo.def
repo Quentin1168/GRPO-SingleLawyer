@@ -1,0 +1,54 @@
+Bootstrap: docker
+From: python:3.12-bookworm
+# NON-slim on purpose: includes gcc/g++ toolchain, which Triton, torch.compile,
+# and Unsloth need at RUNTIME for JIT kernel compilation (slim image broke vLLM's
+# sampler with "Failed to find C compiler"). glibc 2.36; Python 3.12 preinstalled.
+# CUDA runtime libs come from pip nvidia-* wheels; driver via `exec --nv`.
+# No apt-get anywhere: apt cannot drop privileges in a rootless single-UID build.
+# pip (not uv): single-threaded -> immune to this cluster's thread ulimits.
+
+%files
+    requirements.lock /opt/src/requirements.lock
+
+%post
+    set -e
+    # pip temp inside the rootfs (node /tmp is tiny: TmpDisk=0)
+    mkdir -p /opt/tmp
+    export TMPDIR=/opt/tmp
+
+    python3 -m venv /opt/venv
+    . /opt/venv/bin/activate
+    pip install --no-cache-dir --upgrade pip
+    pip install --no-cache-dir --no-deps \
+        --only-binary vllm,torch,xformers,bitsandbytes,flash-attn \
+        -r /opt/src/requirements.lock
+
+    # procps is absent even in the full image; ART shells out to `pkill`.
+    cat > /usr/local/bin/pkill <<'EOS'
+#!/bin/sh
+sig=9
+pat="$1"
+case "$1" in -*) sig="${1#-}"; pat="$2";; esac
+[ -z "$pat" ] && exit 1
+for d in /proc/[0-9]*; do
+    pid="${d#/proc/}"
+    [ "$pid" = "$$" ] && continue
+    cmd=$(tr '\0' ' ' < "$d/cmdline" 2>/dev/null) || continue
+    case "$cmd" in *"$pat"*) kill -"$sig" "$pid" 2>/dev/null;; esac
+done
+exit 0
+EOS
+    chmod +x /usr/local/bin/pkill
+
+    rm -rf /opt/tmp
+
+%environment
+    export VIRTUAL_ENV=/opt/venv
+    export PATH=/opt/venv/bin:$PATH
+
+%runscript
+    exec python3 "$@"
+
+%labels
+    Project GRPO-SingleLawyer
+    Base python3.12-bookworm-glibc2.36-gcc

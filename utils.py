@@ -1,34 +1,73 @@
 import json
-from openai import OpenAI, RateLimitError
+from openai import OpenAI, RateLimitError, AsyncOpenAI
 import jieba
 from sentence_transformers import SentenceTransformer, util
 import re
 import torch
 import time, random
+from dotenv import load_dotenv
+import os
+import asyncio
 
 TEMPERATURE = 0
 API_BASE_URL = "https://openrouter.ai/api/v1"
-API_KEY = ""
 MEMORY_TOP_K = 10
-RAG_TOP_K = 5
-_client = OpenAI(base_url=API_BASE_URL, api_key=API_KEY)
+RAG_TOP_K = 3
+_client = OpenAI(base_url=API_BASE_URL, api_key=os.environ["OPENROUTER_API_KEY"])
+async_client = AsyncOpenAI(base_url=API_BASE_URL, api_key=os.environ["OPENROUTER_API_KEY"])
 MAX_RETRIES = 5
 
+def render_transcript(messages):
+    parts = []
+    for m in messages:
+        role = m["role"] if isinstance(m, dict) else m.role
+        content = m["content"] if isinstance(m, dict) else m.content
+        if role == "system" or not content:
+            continue
+        speaker = "原告律师" if role == "assistant" else "被告律师"
+        parts.append(f"{speaker}：{content}")
+    return "\n\n".join(parts)
+
 def chat(system, model, user, temperature=TEMPERATURE, client=_client,
-         max_tokens=400):                                   
+         max_tokens=300):                                   
     for attempt in range(MAX_RETRIES):
         try:
             resp = client.chat.completions.create(
                 model=model, temperature=temperature, max_tokens=max_tokens,
                 messages=[{"role": "system", "content": system},
-                          {"role": "user", "content": user}],
+                          {"role": "user", "content": render_transcript(user)}],
             )
-            return resp.choices[0].message.content.strip()
-        except RateLimitError:
-            if attempt == MAX_RETRIES - 1:
-                raise
-            time.sleep((2 ** attempt) + random.uniform(0, 1))   # 1s→2s→4s→8s + jitter
 
+            if resp.choices and resp.choices[0].message.content:
+                return resp.choices[0].message.content.strip()
+            err = getattr(resp, "error", None)
+            last_err = RuntimeError(f"empty choices from API: {err}")
+        except Exception as e:
+            last_err = e
+        wait = 2 ** attempt
+        print(f"Attempt bricked because of {last_err}, retrying in {wait}s, {attempt+1}/{MAX_RETRIES}")
+        time.sleep(wait)
+    raise RuntimeError(f"chat function failed after {MAX_RETRIES} attempts: {last_err}")
+
+async def async_chat(system, model, user, temperature=TEMPERATURE, max_tokens =300):
+    for attempt in range(MAX_RETRIES):
+        try:
+            async with asyncio.Semaphore(16):   
+                resp = await async_client.chat.completions.create(
+                    model=model, temperature=temperature, max_tokens=max_tokens,
+                    messages=[{"role": "system", "content": system},
+                            {"role": "user", "content": render_transcript(user)}],
+                    )
+                if resp.choices and resp.choices[0].message.content:
+                    return resp.choices[0].message.content.strip()
+                err = getattr(resp, "error", None)
+                last_err = RuntimeError(f"empty choices from API: {err}")
+        except Exception as e:
+            last_err = e
+        print(f"Attempt bricked because of {last_err}, retrying in {wait}s, {attempt+1}/{MAX_RETRIES}")
+        await asyncio.sleep(2** attempt)
+
+    raise RuntimeError(f"chat function failed after {MAX_RETRIES} attempts: {last_err}")
 
 def chat_json(model, user: str, max_tokens: int = 4096, client=_client,) -> dict:
     for _ in range(3):
