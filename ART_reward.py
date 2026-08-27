@@ -122,11 +122,12 @@ async def llm_judge(trajectory, fact):
     for attempt in range(3):
         try:
             output = await asyncio.to_thread(utils.chat_json,
-                                             "deepseek/deepseek-chat", prompt)
+                                             "z-ai/glm-4.7-flash", prompt)
             if output:
                 break
         except Exception as e:
             print(f"Judge attempt {attempt} failed: {e}")
+    trajectory.metrics["judge_parse_failure"] = 0.0 if output else 1.0
     if not output:
         return np.array([0.0])
     traj_results = []
@@ -159,7 +160,7 @@ async def batch_score(group, case):
         milestone_reward = sum(t.metrics.get(f"turn_reward_{k}", 0.0)
                                for k in range(MAX_TURNS))
         judge_score = float(judge_results[i][-1])   # final running mean
-        t.reward = judge_score * milestone_reward
+        t.reward = judge_score + milestone_reward
         t.metrics["milestone_reward"] = milestone_reward
         t.metrics["judge_reward"] = judge_score
     return group

@@ -20,8 +20,9 @@ import psutil
 
 LEARNING_RATE = 5e-6
 GROUP_SIZE = 8
-RUN_NAME = os.environ.get("RUN_NAME", "grpo-lawyer-02")   
+RUN_NAME = os.environ.get("RUN_NAME", "grpo-lawyer-54")   
 PROJECT  = "GRPO-SingleLawyer"
+CONTEXT_LEN = 12288 
 
 RUN_DIR   = f"./runs/{RUN_NAME}"
 LOG_FILE  = f"{RUN_DIR}/trajectories.jsonl"
@@ -35,16 +36,18 @@ model = art.TrainableModel(
     base_model="Qwen/Qwen3-4B",
     _internal_config=art.dev.InternalModelConfig(
         init_args=art.dev.InitArgs(
-        max_seq_length=8192,        # training must consume what inference produced
+        max_seq_length=CONTEXT_LEN,        # training must consume what inference produced
         load_in_4bit=True,
         ),
         engine_args=art.dev.EngineArgs(
             gpu_memory_utilization=0.45,
             enforce_eager=False,
-            max_num_seqs=8,
-            max_model_len=8192,         # keep in lockstep with max_seq_length
+            max_num_seqs=24,
+            max_model_len=CONTEXT_LEN,         # keep in lockstep with max_seq_length
+            enable_prefix_caching=True
         ),
         peft_args=art.dev.PeftArgs(r=16, lora_alpha=16, lora_dropout=0),
+        
     ),
 
 )
@@ -58,6 +61,8 @@ def snapshot_checkpoint(step):
 
 def log_trajectories(step, epoch, groups):
     all_rewards, all_milestones, all_judge, all_law, all_trunc = [], [], [], [], []
+    all_abs_adv, all_searches = [], []                    
+    zero_var_groups, n_groups = 0, 0 
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         for g in groups:
             subs = list(g.trajectories)
@@ -66,8 +71,15 @@ def log_trajectories(step, epoch, groups):
             var = sum((r - mean) ** 2 for r in rewards) / max(len(rewards), 1)
             std = var ** 0.5
 
+            n_groups += 1                                   
+            if std < 1e-6:                                
+                zero_var_groups += 1 
+
             for t in subs:
                 all_rewards.append(t.reward)
+                adv = (t.reward - mean) / (std + 1e-8)
+                all_abs_adv.append(abs(adv)) 
+                all_searches.append(t.metrics.get("searches", 0.0))
                 all_milestones.append(t.metrics.get("milestones_frac", 0.0))
                 all_judge.append(t.metrics.get("judge_reward", 0.0))
                 all_law.append(t.metrics.get("law_found", 0.0))
@@ -97,6 +109,9 @@ def log_trajectories(step, epoch, groups):
             "custom/reward_hist": wandb.Histogram(all_rewards) if all_rewards else 0.0,
             "custom/epoch": epoch,
             "custom/step": step,          # own axis — never dropped by ART's counter
+            "custom/mean_abs_advantage": sum(all_abs_adv) / n,                   
+            "custom/zero_variance_group_frac": zero_var_groups / max(n_groups, 1), 
+            "custom/searches_per_game": sum(all_searches) / n,                   
         })
 
 
@@ -181,7 +196,7 @@ async def train():
         print(f"[ram after gather] free={psutil.virtual_memory().available/1e9:.0f}G "
       f"shmem={psutil.virtual_memory().shared/1e9:.0f}G", flush=True)
         await model.train(trajectory_groups,
-                          config=art.TrainConfig(learning_rate=LEARNING_RATE))
+                          config=art.TrainConfig(learning_rate=LEARNING_RATE, kl_penalty_coef=0.01))
         print(f"[ram after train    ] free={psutil.virtual_memory().available/1e9:.0f}G "
       f"shmem={psutil.virtual_memory().shared/1e9:.0f}G", flush=True)
         log_trajectories(batch.step, batch.epoch, trajectory_groups)

@@ -11,13 +11,16 @@ from transformers import AutoTokenizer
 
 MAX_TURNS = 8
 MAX_TOKENS_PER_TURN = 300
+MAX_DB_TOKENS = 250
 MAX_TOKENS_RAG_FOLLOWUP = 250
 SIM_THRESHOLD = 0.70                      
 OPPONENT_MODEL = "deepseek/deepseek-chat"
-CONTEXT_LEN = 8192
+JUDGE_MODEL = "z-ai/glm-4.7-flash"
+CONTEXT_LEN = 12288
 MAX_NEW_TOKENS = 300
 BUFFER = 64
 MAX_INPUT = CONTEXT_LEN - MAX_NEW_TOKENS - BUFFER
+MAX_RAG_INPUT = CONTEXT_LEN - MAX_TOKENS_RAG_FOLLOWUP - BUFFER
 
 
 RL_SYSTEM_PROMPT = ( 
@@ -56,7 +59,7 @@ class TrajectoryHelper():
         self.id = id
         self.milestones = ast.literal_eval(milestones)
         self.law = law
-        self.threshold = 0.85
+        self.threshold = 0.7
         self.max_turns = max_turns
         self.model = model
         self.semantic_model = semantic_model
@@ -69,6 +72,7 @@ class TrajectoryHelper():
         self.model_name = self.model.get_inference_name() 
         self.rag_db = self._shared_rag_db()
         self.tokeniser = self._shared_tokeniser()
+        self.search_count = 0
         
 
     def sentence_split(self, text: str):
@@ -76,7 +80,9 @@ class TrajectoryHelper():
         return [s.strip() for s in split if len(s.strip())> 4]
     
     async def milestone_checker(self, text, achieved):
-        sentences = self.sentence_split(text)
+        sentences = [s for s in self.sentence_split(text) if s.strip()]
+        if not sentences:
+            return None  
 
         sentence_embeddings = await asyncio.to_thread(
             self.semantic_model.encode,
@@ -90,10 +96,13 @@ class TrajectoryHelper():
 
 
         
-        return {
-            j for j in range(len(self.milestones))
-            if j not in achieved and similarity_matrix[:, j].max().item() >= self.threshold
-        }
+        for j in range(len(self.milestones)):
+            if j in achieved:
+                continue
+            col = similarity_matrix[:, j]
+            if col.max().item() >= self.threshold:
+                return j, sentences[int(col.argmax())]
+        return None
 
     async def trajectory_rollout(self):
         api = self.model.openai_client()
@@ -109,7 +118,8 @@ class TrajectoryHelper():
 
         achieved = set()
         law_check = False
-
+        judged_rejections = 0
+        judge_failures = 0
         for turn in range(self.max_turns):
             n = len(self.tokeniser.apply_chat_template(trajectory.messages(), \
                     add_generation_prompt=True, tokenize=True))
@@ -120,7 +130,7 @@ class TrajectoryHelper():
                 reply = await api.chat.completions.create(
                             model=self.model_name,
                             messages=trajectory.messages(),
-                            max_completion_tokens=MAX_TOKENS_PER_TURN,
+                            max_completion_tokens=min(MAX_INPUT, MAX_TOKENS_PER_TURN),
                             temperature=0.85,
                             extra_body={"chat_template_kwargs": {"enable_thinking": False}},
                         )
@@ -140,19 +150,24 @@ class TrajectoryHelper():
             turn_reward = 0.0
             if query:
                 retrieved = await asyncio.to_thread(self.rag_db.group_search, [query])
+                self.search_count += 1
+                tok_ids = self.tokeniser.encode(str(retrieved[0]), add_special_tokens = False)
+                if len(tok_ids) > MAX_DB_TOKENS:
+                    retrieved = self.tokeniser.decode(tok_ids[:MAX_DB_TOKENS])
+                
                 trajectory.messages_and_choices.append(          
                     {"role": "user", "content": f"[Database Result]:\n {retrieved[0]}"}
                 )
                 n2 = len(self.tokeniser.apply_chat_template(trajectory.messages(), \
                     add_generation_prompt=True, tokenize=True))
-                if n2 > MAX_INPUT:
+                if n2 > MAX_RAG_INPUT:
                     trajectory.metrics["truncated_by_context"] = 1.0
                     break
                 try:
                     query_reply = await api.chat.completions.create(
                                         model=self.model_name,
                                         messages=trajectory.messages(),
-                                        max_completion_tokens=MAX_TOKENS_RAG_FOLLOWUP,
+                                        max_completion_tokens=min(MAX_INPUT, MAX_TOKENS_RAG_FOLLOWUP),
                                         temperature=0.85,
                                         extra_body={"chat_template_kwargs": {"enable_thinking": False}},
                                     )
@@ -167,22 +182,28 @@ class TrajectoryHelper():
                 trajectory.messages_and_choices.append(query_trainable)
 
                 agent_text += "\n" + (query_trainable.message.content or "")
-
-                translated_text = cn2an.transform(agent_text)
-                print("CHECKING LAW:")
-                law_numbers = re.findall(r'\d+', self.law)
-                if law_numbers and law_numbers[0] in translated_text:
-                    print("LAW FOUND")
-                    turn_reward += milestone_reward
-                    law_check = True
+                if law_check != True:
+                    translated_text = cn2an.transform(agent_text)
+                    print("CHECKING LAW:")
+                    law_numbers = re.findall(r'\d+', self.law)
+                    if law_numbers and law_numbers[0] in translated_text:
+                        print("LAW FOUND")
+                        turn_reward += milestone_reward
+                        law_check = True
             
 
-            milestone_check = await self.milestone_checker(agent_text, achieved)
-
-
-            for i in milestone_check:
-                achieved.add(i)
-                turn_reward += milestone_reward
+            candidate = await self.milestone_checker(agent_text, achieved)
+            if candidate is not None:
+                idx, sentence = candidate
+                verified, judge_ok = await utils.judge_milestone_async(
+                    self.fact,  JUDGE_MODEL, self.milestones[idx], agent_text, sentence)
+                if not judge_ok:
+                    judge_failures += 1
+                if verified:
+                    achieved.add(idx)
+                    turn_reward += milestone_reward
+                else:
+                    judged_rejections += 1
 
             trajectory.metrics[f"turn_reward_{turn}"] = turn_reward
 
@@ -199,6 +220,9 @@ class TrajectoryHelper():
         trajectory.metrics["milestones_achieved"] = float(len(achieved))
         trajectory.metrics["milestone_frac"] = len(achieved) / max(len(self.milestones), 1)
         trajectory.metrics["law_found"]= float(law_check)
+        trajectory.metrics["milestone_rejections"] = float(judged_rejections)
+        trajectory.metrics["milestone_judge_failures"] = float(judge_failures)
+        trajectory.metrics["searches"] = float(self.search_count)
 
         return trajectory
 
