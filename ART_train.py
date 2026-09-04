@@ -20,13 +20,12 @@ import psutil
 
 LEARNING_RATE = 5e-6
 GROUP_SIZE = 8
-RUN_NAME = os.environ.get("RUN_NAME", "grpo-lawyer-54")   
+RUN_NAME = os.environ.get("RUN_NAME", "grpo-lawyer-56")   
 PROJECT  = "GRPO-SingleLawyer"
 CONTEXT_LEN = 12288 
 
 RUN_DIR   = f"./runs/{RUN_NAME}"
 LOG_FILE  = f"{RUN_DIR}/trajectories.jsonl"
-EVAL_FILE = f"{RUN_DIR}/eval.jsonl"
 SNAP_DIR  = f"{RUN_DIR}/snapshots"
 os.makedirs(SNAP_DIR, exist_ok=True)
 
@@ -36,14 +35,14 @@ model = art.TrainableModel(
     base_model="Qwen/Qwen3-4B",
     _internal_config=art.dev.InternalModelConfig(
         init_args=art.dev.InitArgs(
-        max_seq_length=CONTEXT_LEN,        # training must consume what inference produced
+        max_seq_length=CONTEXT_LEN,        
         load_in_4bit=True,
         ),
         engine_args=art.dev.EngineArgs(
             gpu_memory_utilization=0.45,
             enforce_eager=False,
             max_num_seqs=24,
-            max_model_len=CONTEXT_LEN,         # keep in lockstep with max_seq_length
+            max_model_len=CONTEXT_LEN,        
             enable_prefix_caching=True
         ),
         peft_args=art.dev.PeftArgs(r=16, lora_alpha=16, lora_dropout=0),
@@ -108,7 +107,7 @@ def log_trajectories(step, epoch, groups):
             "custom/truncation_rate": sum(all_trunc) / n,
             "custom/reward_hist": wandb.Histogram(all_rewards) if all_rewards else 0.0,
             "custom/epoch": epoch,
-            "custom/step": step,          # own axis — never dropped by ART's counter
+            "custom/step": step,          
             "custom/mean_abs_advantage": sum(all_abs_adv) / n,                   
             "custom/zero_variance_group_frac": zero_var_groups / max(n_groups, 1), 
             "custom/searches_per_game": sum(all_searches) / n,                   
@@ -141,8 +140,7 @@ async def evaluate(model, eval_cases, step, encode_model):
     if not records:
         return {}
     agg = {k: sum(r[k] for r in records) / len(records) for k in records[0]}
-    with open(EVAL_FILE, "a", encoding="utf-8") as f:
-        f.write(json.dumps({"step": step, **agg}) + "\n")
+
     if wandb.run is not None:
         wandb.log({**{f"eval/{k}": v for k, v in agg.items()}, "custom/step": step})
     print(f"[EVAL @ step {step}] " + " | ".join(f"{k}={v:.3f}" for k, v in agg.items()))

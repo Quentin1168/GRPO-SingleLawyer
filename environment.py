@@ -131,7 +131,7 @@ class TrajectoryHelper():
                             model=self.model_name,
                             messages=trajectory.messages(),
                             max_completion_tokens=min(MAX_INPUT, MAX_TOKENS_PER_TURN),
-                            temperature=0.85,
+                            temperature=0.0,
                             extra_body={"chat_template_kwargs": {"enable_thinking": False}},
                         )
             except openai.BadRequestError as e:
@@ -151,12 +151,14 @@ class TrajectoryHelper():
             if query:
                 retrieved = await asyncio.to_thread(self.rag_db.group_search, [query])
                 self.search_count += 1
-                tok_ids = self.tokeniser.encode(str(retrieved[0]), add_special_tokens = False)
+
+                db_text = self.rag_db.format_results(retrieved)
+                tok_ids = self.tokeniser.encode(db_text, add_special_tokens = False)
                 if len(tok_ids) > MAX_DB_TOKENS:
-                    retrieved = self.tokeniser.decode(tok_ids[:MAX_DB_TOKENS])
-                
+                    db_text = self.tokeniser.decode(tok_ids[:MAX_DB_TOKENS])
+                print(db_text)
                 trajectory.messages_and_choices.append(          
-                    {"role": "user", "content": f"[Database Result]:\n {retrieved[0]}"}
+                    {"role": "user", "content": f"[Database Result]:\n {db_text}"}
                 )
                 n2 = len(self.tokeniser.apply_chat_template(trajectory.messages(), \
                     add_generation_prompt=True, tokenize=True))

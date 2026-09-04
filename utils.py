@@ -210,16 +210,15 @@ class LawRetriever:
 
             tk = torch.topk(similarity_matrix[i], k=top_k)
 
-            best_res = tk.indices[0].item()
-
-            res.append(self.corpus_embeddings[best_res])
-
+            for idx in tk.indices.tolist():
+                name = self.keys[idx]
+                res.append((name, self.laws[name]))    
         return res
 
     def format_results(self, results: list[tuple[str, str]]) -> str:
         if not results:
             return "（未检索到相关法条）"
-        return "\n".join(f"【{k}】{v}" for k, v in results)
+        return "\n".join(f"{v} {k}" for k, v in results)
 
     def extract_search_query(self, text: str) -> str | None:
         """Extracts query from <search>query</search> tags."""
@@ -228,3 +227,5 @@ class LawRetriever:
             print("search was found")
             return match.group(1).strip()
         return None
+
+
