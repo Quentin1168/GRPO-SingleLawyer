@@ -1,0 +1,31 @@
+{"time":"2026-08-22T16:53:44.356370214Z","level":"INFO","msg":"stream: starting","core version":"0.25.0"}
+{"time":"2026-08-22T16:53:44.701058815Z","level":"INFO","msg":"stream: created new stream","id":"grpo-lawyer-52"}
+{"time":"2026-08-22T16:53:44.701203362Z","level":"INFO","msg":"handler: started","stream_id":"grpo-lawyer-52"}
+{"time":"2026-08-22T16:53:44.701479395Z","level":"INFO","msg":"stream: started","id":"grpo-lawyer-52"}
+{"time":"2026-08-22T16:53:44.701514207Z","level":"INFO","msg":"writer: started","stream_id":"grpo-lawyer-52"}
+{"time":"2026-08-22T16:53:44.70154314Z","level":"INFO","msg":"sender: started","stream_id":"grpo-lawyer-52"}
+{"time":"2026-08-22T16:54:00.214659614Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:01.408468206Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:03.703154423Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:07.846168625Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:15.214841931Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:16.310419277Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:18.624987814Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:23.417382903Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:30.215106491Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:31.270892286Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:33.587044833Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:37.613077091Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:45.215561055Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:46.230554222Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:48.276051517Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:54:52.746046216Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:55:00.214638232Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:55:01.277047725Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:55:03.447919297Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:55:07.974881816Z","level":"ERROR","msg":"request failed","error":"Get \"http://localhost:8000/metrics\": dial tcp [::1]:8000: connect: connection refused","method":"GET","url":"http://localhost:8000/metrics"}
+{"time":"2026-08-22T16:55:13.050130874Z","level":"INFO","msg":"stream: closing","id":"grpo-lawyer-52"}
+{"time":"2026-08-22T16:55:13.595481239Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2026-08-22T16:55:14.033261209Z","level":"INFO","msg":"handler: closed","stream_id":"grpo-lawyer-52"}
+{"time":"2026-08-22T16:55:14.033473296Z","level":"INFO","msg":"sender: closed","stream_id":"grpo-lawyer-52"}
+{"time":"2026-08-22T16:55:14.033490933Z","level":"INFO","msg":"stream: closed","id":"grpo-lawyer-52"}

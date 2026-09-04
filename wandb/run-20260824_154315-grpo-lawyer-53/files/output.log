@@ -1,0 +1,3390 @@
+[34m[1mwandb[0m: Detected [huggingface_hub.inference, litellm, openai] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Weave is installed but not imported. Add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai/
+Iterating dataset:   7%|█████████████▊                                                                                                                                                                                                 | 222/3320 [00:00<?, ?batch/s]
+
+--- Step 222 | Epoch 0 | Cases [1376, 1091, 778] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+gather: 100%|█| 24/24 [04:11<00:00, 10.47s/it, reward=0, turn_reward_0=0.323, turn_reward_1=0.0729, turn_reward_2=0.0521, turn_reward_3=0.0729, milestones_achieved=1.83, milestone_frac=0.611, law_found=0.75, milestone_rejections=2.08, milestone_judge_failures=0
+/workspace/GRPO-SingleLawyer/ART_train.py:198: DeprecationWarning: model.train() is deprecated. Use backend.train(model, ...) instead.3=0.0729, milestones_achieved=1.83, milestone_frac=0.611, law_found=0.75, milestone_rejections=2.08, milestone_judge_failures=0
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1537G shmem=6G
+
+Migration guide:
+  # Before (deprecated):
+  await model.train(trajectory_groups, config=TrainConfig(learning_rate=5e-6))
+
+  # After (recommended):
+  result = await backend.train(model, trajectory_groups, learning_rate=5e-6)
+  await model.log(trajectory_groups, metrics=result.metrics, step=result.step, split='train')
+
+Key differences:
+  - backend.train() does NOT automatically log trajectories or metrics
+  - backend.train() returns a TrainResult with step, metrics, and checkpoint info
+  - Each backend has its own type-checked parameters (no more generic config objects)
+  await model.train(trajectory_groups,
+Packed 24 trajectories into 22 sequences of length 8192
+train: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 22/22 [01:15<00:00,  3.45s/it, loss/train=0.278, loss/grad_norm=0.538, loss/learning_rate=5e-6, loss/entropy=0.315]
+Iterating dataset:   7%|█████████████                                                                                                                                                                                     | 223/3320 [05:41<294:08:35, 341.92s/batch]
+[ram after train    ] free=1520G shmem=20G
+
+--- Step 223 | Epoch 0 | Cases [729, 1759, 1113] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1520G shmem=20G
+Packed 24 trajectories into 20 sequences of length 8192
+Iterating dataset:   7%|█████████████                                                                                                                                                                                     | 224/3320 [10:51<277:49:17, 323.05s/batch]
+[ram after train    ] free=1528G shmem=20G
+
+--- Step 224 | Epoch 0 | Cases [1566, 1252, 652] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1528G shmem=20G
+Packed 24 trajectories into 20 sequences of length 8192
+Iterating dataset:   7%|█████████████▏                                                                                                                                                                                    | 225/3320 [16:08<275:19:28, 320.25s/batch]
+[ram after train    ] free=1529G shmem=20G
+
+--- Step 225 | Epoch 0 | Cases [512, 32, 1458] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1528G shmem=20G
+Packed 24 trajectories into 20 sequences of length 8192
+Iterating dataset:   7%|█████████████▏                                                                                                                                                                                    | 226/3320 [21:03<266:39:44, 310.27s/batch]
+[ram after train    ] free=1508G shmem=39G
+
+--- Step 226 | Epoch 0 | Cases [1676, 655, 69] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1508G shmem=39G
+Packed 24 trajectories into 23 sequences of length 8192
+Iterating dataset:   7%|█████████████▎                                                                                                                                                                                    | 227/3320 [26:28<271:04:27, 315.51s/batch]
+[ram after train    ] free=1508G shmem=39G
+
+--- Step 227 | Epoch 0 | Cases [1533, 1338, 1236] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1508G shmem=39G
+Packed 24 trajectories into 21 sequences of length 8192
+Iterating dataset:   7%|█████████████▎                                                                                                                                                                                    | 228/3320 [32:14<279:54:38, 325.90s/batch]
+[ram after train    ] free=1509G shmem=39G
+
+--- Step 228 | Epoch 0 | Cases [1161, 322, 725] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[milestone-judge] failed after 5 attempts: empty choices: None
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1508G shmem=39G
+Packed 24 trajectories into 22 sequences of length 8192
+Iterating dataset:   7%|█████████████▍                                                                                                                                                                                    | 229/3320 [37:48<281:57:32, 328.39s/batch]
+[ram after train    ] free=1508G shmem=39G
+
+--- Step 229 | Epoch 0 | Cases [1868, 884, 1881] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1507G shmem=39G
+Packed 24 trajectories into 22 sequences of length 8192
+Iterating dataset:   7%|█████████████▍                                                                                                                                                                                    | 230/3320 [43:31<285:55:24, 333.11s/batch]
+[ram after train    ] free=1508G shmem=39G
+
+--- Step 230 | Epoch 0 | Cases [241, 683, 829] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1508G shmem=39G
+Packed 24 trajectories into 21 sequences of length 8192
+train: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:55<00:00,  2.56s/it, loss/train=-0.389, loss/grad_norm=0.878, loss/learning_rate=5e-6, loss/entropy=0.38]
+[ram after train    ] free=1511G shmem=39G
+gather:   0%|                                                                                                                                                                                                                                 | 0/10 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+gather:   0%|                                                                                                                                                                                                                                 | 0/10 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+Attempt bricked because of Expecting ',' delimiter: line 1 column 268 (char 267), retrying in 1s, 1/5
+search was found
+search was found
+Attempt bricked because of Expecting ',' delimiter: line 1 column 193 (char 192), retrying in 2s, 2/5
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+gather:   0%|                                                                                                                                                                                                                                 | 0/10 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+gather:   0%|                                                                                                                                                                                                                                 | 0/10 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+gather:   0%|                                                                                                                                                                                                                                 | 0/10 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+gather:   0%|                                                                                                                                                                                                                                 | 0/10 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+gather:   0%|                                                                                                                                                                                                                                 | 0/10 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+Attempt bricked because of Unterminated string starting at: line 1 column 281 (char 280), retrying in 1s, 1/5
+Attempt bricked because of Unterminated string starting at: line 1 column 281 (char 280), retrying in 2s, 2/5
+search was found
+search was found
+search was found
+Attempt bricked because of Expecting ',' delimiter: line 360 column 1 (char 544), retrying in 4s, 3/5
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+Attempt bricked because of Expecting ',' delimiter: line 1 column 178 (char 177), retrying in 1s, 1/5
+Attempt bricked because of Expecting ',' delimiter: line 1 column 178 (char 177), retrying in 2s, 2/5
+search was found
+gather:   0%|                                                                                                                                                                                                                                 | 0/10 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+gather:   0%|                                                                                                                                                                                                                                 | 0/10 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+gather:   0%|                                                                                                                                                                                                                                 | 0/10 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[EVAL @ step 230] milestone_frac=0.795 | law_found=0.890 | success=0.470 | turns_used=6.240
+
+--- Step 231 | Epoch 0 | Cases [1337, 1257, 361] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1501G shmem=39G
+Packed 24 trajectories into 19 sequences of length 8192
+Iterating dataset:   7%|█████████████▍                                                                                                                                                                                  | 232/3320 [1:28:05<655:19:39, 763.98s/batch]
+[ram after train    ] free=1500G shmem=39G
+
+--- Step 232 | Epoch 0 | Cases [1162, 1638, 49] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1498G shmem=39G
+Packed 24 trajectories into 21 sequences of length 8192
+Iterating dataset:   7%|█████████████▍                                                                                                                                                                                  | 233/3320 [1:33:35<541:17:59, 631.25s/batch]
+[ram after train    ] free=1499G shmem=39G
+
+--- Step 233 | Epoch 0 | Cases [1471, 1372, 1240] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1497G shmem=39G
+Packed 24 trajectories into 21 sequences of length 8192
+Iterating dataset:   7%|█████████████▌                                                                                                                                                                                  | 234/3320 [1:40:27<483:52:35, 564.47s/batch]
+[ram after train    ] free=1498G shmem=39G
+
+--- Step 234 | Epoch 0 | Cases [1604, 1754, 1032] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+[ram after gather] free=1498G shmem=39G
+Packed 24 trajectories into 24 sequences of length 8192
+train:  38%|█████████████████████████████████████████████████▏                                                                                 | 9/24 [00:24<00:38,  2.60s/it, loss/train=-0.0129, loss/grad_norm=0.027, loss/learning_rate=5e-6, loss/entropy=0.278]

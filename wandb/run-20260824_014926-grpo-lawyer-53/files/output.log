@@ -1,0 +1,85 @@
+[34m[1mwandb[0m: Detected [huggingface_hub.inference, litellm, openai] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Weave is installed but not imported. Add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai/
+Iterating dataset:   4%|████████▏                                                                                                                                                                                                      | 131/3320 [00:00<?, ?batch/s]
+
+--- Step 131 | Epoch 0 | Cases [742, 807, 353] ---
+Traceback (most recent call last):                                                                                                                                                                                              | 0/24 [00:06<?, ?it/s, exceptions=3]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+  File "/workspace/GRPO-SingleLawyer/ART_train.py", line 214, in <module>
+    asyncio.run(train())
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 30, in run
+    return loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 98, in run_until_complete
+    return f.result()
+           ^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/futures.py", line 202, in result
+    raise self._exception.with_traceback(self._exception_tb)
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/tasks.py", line 316, in __step_run_and_handle_result
+    result = coro.throw(exc)
+             ^^^^^^^^^^^^^^^
+  File "/workspace/GRPO-SingleLawyer/ART_train.py", line 187, in train
+    trajectory_groups = await art.gather_trajectory_groups(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/art/gather.py", line 50, in gather_trajectory_groups
+    result_groups = await future
+                    ^^^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/tasks.py", line 385, in __wakeup
+    future.result()
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/tasks.py", line 314, in __step_run_and_handle_result
+    result = coro.send(None)
+             ^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/art/gather.py", line 41, in group_forward
+    group = await wrap_group_awaitable(g)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/art/gather.py", line 144, in wrap_group_awaitable
+    return await awaitable
+           ^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/art/trajectories.py", line 282, in _
+    trajectory = await future
+                 ^^^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/tasks.py", line 631, in _wait_for_one
+    return f.result()  # May raise f.exception().
+           ^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/futures.py", line 202, in result
+    raise self._exception.with_traceback(self._exception_tb)
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/tasks.py", line 314, in __step_run_and_handle_result
+    result = coro.send(None)
+             ^^^^^^^^^^^^^^^
+  File "/workspace/GRPO-SingleLawyer/environment.py", line 195, in trajectory_rollout
+    candidate = await self.milestone_checker(agent_text, achieved)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/GRPO-SingleLawyer/environment.py", line 83, in milestone_checker
+    sentences = [s for s in sentence_split(agent_text) if s.strip()]
+                            ^^^^^^^^^^^^^^
+NameError: name 'sentence_split' is not defined. Did you mean: 'self.sentence_split'?

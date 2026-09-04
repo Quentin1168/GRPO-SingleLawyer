@@ -1,0 +1,67 @@
+[34m[1mwandb[0m: Detected [huggingface_hub.inference, litellm, openai] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Weave is installed but not imported. Add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai/
+Iterating dataset:   0%|                                                                                                                                                                                                                 | 0/3320 [00:19<?, ?batch/s]
+
+--- Step 0 | Epoch 0 | Cases [284, 1146, 115] ---
+Traceback (most recent call last):                                                                                                                                                                                              | 0/24 [00:07<?, ?it/s, exceptions=3]
+search was found
+search was found
+search was found
+  File "/workspace/GRPO-SingleLawyer/ART_train.py", line 211, in <module>
+    asyncio.run(train())
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 30, in run
+    return loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 98, in run_until_complete
+    return f.result()
+           ^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/futures.py", line 202, in result
+    raise self._exception.with_traceback(self._exception_tb)
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/tasks.py", line 316, in __step_run_and_handle_result
+    result = coro.throw(exc)
+             ^^^^^^^^^^^^^^^
+  File "/workspace/GRPO-SingleLawyer/ART_train.py", line 184, in train
+    trajectory_groups = await art.gather_trajectory_groups(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/art/gather.py", line 50, in gather_trajectory_groups
+    result_groups = await future
+                    ^^^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/tasks.py", line 385, in __wakeup
+    future.result()
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/tasks.py", line 314, in __step_run_and_handle_result
+    result = coro.send(None)
+             ^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/art/gather.py", line 41, in group_forward
+    group = await wrap_group_awaitable(g)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/art/gather.py", line 144, in wrap_group_awaitable
+    return await awaitable
+           ^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/art/trajectories.py", line 282, in _
+    trajectory = await future
+                 ^^^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/tasks.py", line 631, in _wait_for_one
+    return f.result()  # May raise f.exception().
+           ^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/futures.py", line 202, in result
+    raise self._exception.with_traceback(self._exception_tb)
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/asyncio/tasks.py", line 314, in __step_run_and_handle_result
+    result = coro.send(None)
+             ^^^^^^^^^^^^^^^
+  File "/workspace/GRPO-SingleLawyer/environment.py", line 152, in trajectory_rollout
+    tok_ids = self.tokeniser.encode(retrieved, add_special_tokens = False)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 2705, in encode
+    encoded_inputs = self.encode_plus(
+                     ^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 3096, in encode_plus
+    return self._encode_plus(
+           ^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/transformers/tokenization_utils_fast.py", line 627, in _encode_plus
+    batched_output = self._batch_encode_plus(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/transformers/tokenization_utils_fast.py", line 553, in _batch_encode_plus
+    encodings = self._tokenizer.encode_batch(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: TextEncodeInput must be Union[TextInputSequence, Tuple[InputSequence, InputSequence]]

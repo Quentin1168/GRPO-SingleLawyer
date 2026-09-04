@@ -1,0 +1,40 @@
+{
+  "os":  "Linux-6.8.0-88-generic-x86_64-with-glibc2.39",
+  "python":  "CPython 3.12.14",
+  "startedAt":  "2026-08-23T05:56:42.800522Z",
+  "program":  "/workspace/GRPO-SingleLawyer/ART_train.py",
+  "codePath":  "ART_train.py",
+  "codePathLocal":  "ART_train.py",
+  "git":  {
+    "remote":  "https://github.com/Quentin1168/GRPO-SingleLawyer.git",
+    "commit":  "8ee8e54abb3e1b889a54b8d10a8f57eff90661ae"
+  },
+  "email":  "quentinchang1168@gmail.com",
+  "root":  "/workspace/GRPO-SingleLawyer",
+  "host":  "dcbebe46e3bd",
+  "executable":  "/workspace/myenv/bin/python3",
+  "cpu_count":  64,
+  "cpu_count_logical":  128,
+  "gpu":  "NVIDIA L40S",
+  "gpu_count":  1,
+  "disk":  {
+    "/":  {
+      "total":  "42949672960",
+      "used":  "24599842816"
+    }
+  },
+  "memory":  {
+    "total":  "1623028535296"
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "NVIDIA L40S",
+      "memoryTotal":  "48305799168",
+      "cudaCores":  18176,
+      "architecture":  "Ada",
+      "uuid":  "GPU-7da1e0d6-8e1c-7774-e7da-7c02372c8b93"
+    }
+  ],
+  "cudaVersion":  "13.0",
+  "writerId":  "3hlj4rpmvmpzbdjq5p4pjas42jlhbb57"
+}

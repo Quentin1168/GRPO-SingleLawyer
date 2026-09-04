@@ -1,0 +1,11 @@
+{"time":"2026-08-28T15:55:56.36748781Z","level":"INFO","msg":"stream: starting","core version":"0.25.0"}
+{"time":"2026-08-28T15:55:56.703216002Z","level":"INFO","msg":"stream: created new stream","id":"grpo-lawyer-54"}
+{"time":"2026-08-28T15:55:56.703410543Z","level":"INFO","msg":"handler: started","stream_id":"grpo-lawyer-54"}
+{"time":"2026-08-28T15:55:56.703507919Z","level":"INFO","msg":"stream: started","id":"grpo-lawyer-54"}
+{"time":"2026-08-28T15:55:56.703556612Z","level":"INFO","msg":"writer: started","stream_id":"grpo-lawyer-54"}
+{"time":"2026-08-28T15:55:56.70358875Z","level":"INFO","msg":"sender: started","stream_id":"grpo-lawyer-54"}
+{"time":"2026-08-28T15:55:58.815637552Z","level":"INFO","msg":"stream: closing","id":"grpo-lawyer-54"}
+{"time":"2026-08-28T15:55:59.713133457Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2026-08-28T15:55:59.969532205Z","level":"INFO","msg":"handler: closed","stream_id":"grpo-lawyer-54"}
+{"time":"2026-08-28T15:55:59.969677693Z","level":"INFO","msg":"sender: closed","stream_id":"grpo-lawyer-54"}
+{"time":"2026-08-28T15:55:59.969687197Z","level":"INFO","msg":"stream: closed","id":"grpo-lawyer-54"}

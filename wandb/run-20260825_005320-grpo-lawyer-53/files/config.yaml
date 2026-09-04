@@ -1,0 +1,149 @@
+_wandb:
+    value:
+        cli_version: 0.25.0
+        e:
+            kaj2s5x2bg3n01vc9jvx2b6ak9fpteyk:
+                codePath: ART_train.py
+                codePathLocal: ART_train.py
+                cpu_count: 64
+                cpu_count_logical: 128
+                cudaVersion: "13.0"
+                disk:
+                    /:
+                        total: "42949672960"
+                        used: "24635867136"
+                email: quentinchang1168@gmail.com
+                executable: /workspace/myenv/bin/python3
+                git:
+                    commit: 8ee8e54abb3e1b889a54b8d10a8f57eff90661ae
+                    remote: https://github.com/Quentin1168/GRPO-SingleLawyer.git
+                gpu: NVIDIA L40S
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ada
+                      cudaCores: 18176
+                      memoryTotal: "48305799168"
+                      name: NVIDIA L40S
+                      uuid: GPU-7da1e0d6-8e1c-7774-e7da-7c02372c8b93
+                host: dcbebe46e3bd
+                memory:
+                    total: "1623028535296"
+                os: Linux-6.8.0-88-generic-x86_64-with-glibc2.39
+                program: /workspace/GRPO-SingleLawyer/ART_train.py
+                python: CPython 3.12.14
+                root: /workspace/GRPO-SingleLawyer
+                startedAt: "2026-08-25T00:53:20.137956Z"
+                writerId: kaj2s5x2bg3n01vc9jvx2b6ak9fpteyk
+        m:
+            - "1": training_step
+              "6":
+                - 3
+              "7": []
+            - "1": time/wall_clock_sec
+              "6":
+                - 3
+              "7": []
+            - "2": reward/*
+              "5": 1
+              "6":
+                - 1
+              "7": []
+            - "2": throughput/*
+              "5": 1
+              "6":
+                - 1
+              "7": []
+            - "2": data/*
+              "5": 1
+              "6":
+                - 1
+              "7": []
+            - "2": train/*
+              "5": 1
+              "6":
+                - 1
+              "7": []
+            - "2": val/*
+              "5": 1
+              "6":
+                - 1
+              "7": []
+            - "2": test/*
+              "5": 1
+              "6":
+                - 1
+              "7": []
+            - "2": discarded/*
+              "5": 1
+              "6":
+                - 1
+              "7": []
+            - "2": custom/*
+              "5": 11
+              "6":
+                - 1
+              "7": []
+            - "1": custom/step
+              "6": []
+              "7": []
+            - "2": loss/*
+              "5": 1
+              "6":
+                - 1
+              "7": []
+            - "2": costs/*
+              "5": 1
+              "6":
+                - 1
+              "7": []
+            - "2": time/*
+              "5": 1
+              "6":
+                - 1
+              "7": []
+            - "2": eval/*
+              "5": 11
+              "6":
+                - 1
+              "7": []
+        python_version: 3.12.14
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 75
+                - 83
+                - 84
+                - 95
+                - 98
+            "2":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 75
+                - 83
+                - 84
+                - 95
+                - 98
+            "3":
+                - 5
+                - 7
+                - 13
+                - 14
+                - 62
+            "4": 3.12.14
+            "5": 0.25.0
+            "6": 4.56.2
+            "12": 0.25.0
+            "13": linux-x86_64

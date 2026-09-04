@@ -1,0 +1,124 @@
+[34m[1mwandb[0m: Detected [huggingface_hub.inference, litellm, openai] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Weave is installed but not imported. Add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai/
+Iterating dataset:   0%|                                                                                                                                                                                                                       | 0/3320 [00:00<?, ?batch/s]
+
+--- Step 0 | Epoch 0 | Cases [284, 1146, 115] ---
+gather: 100%|█| 24/24 [03:13<00:00,  7.22s/it, reward=0, turn_reward_0=0.25, truncated_by_context=1, milestones_achieved=1.5, milestone_frac=0.5, law_found=0.25, milestone_rejections=1.62, milestone_judge_failures=0, turn_reward_1=0.0909, turn_reward_2=0.0469, turn_r
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...'": false, "hallucination_penalty": false},\n    "tier_reasoning": "内容与上一轮高度雷同，缺乏新的论点，未能针对被告方的最后陈述进行有力回击。"\n    },\n    "Agent Turn 6": {\n    "scores": {"Q_rebuttal": 0.3, "Q_subsumption": 0.4, "Q_logic":'
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...', "Q_logic": 0.6, "Q_rhetoric": 0.9},\n    "penalties": {"stuffing_penalty": false, "hallucination_penalty": false},\n    "tier_reasoning": "智能体重复了前两轮关于构成犯罪的观点，引用了无证驾驶作为加重情节。内容缺乏新意，且未针对对手的辩护进行实质性反驳，逻辑连贯'
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+  File "/workspace/GRPO-SingleLawyer/ART_train.py", line 199, in <module>
+    asyncio.run(train())
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 30, in run
+    return loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 92, in run_until_complete
+    self._run_once()
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 115, in _run_once
+    event_list = self._selector.select(timeout)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/selectors.py", line 468, in select
+    fd_event_list = self._selector.poll(timeout, max_ev)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''
+[chat_json] JSON parse failed, raw tail: ...''

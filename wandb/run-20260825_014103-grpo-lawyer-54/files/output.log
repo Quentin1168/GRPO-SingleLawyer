@@ -1,0 +1,1795 @@
+[34m[1mwandb[0m: Detected [huggingface_hub.inference, litellm, openai] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Weave is installed but not imported. Add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai/
+Iterating dataset:   0%|                                                                                                                                                                                                                 | 0/3320 [00:00<?, ?batch/s]
+
+--- Step 0 | Epoch 0 | Cases [284, 1146, 115] ---
+gather: 100%|█| 24/24 [03:03<00:00,  3.51s/it, reward=0, turn_reward_0=0.219, turn_reward_1=0.0729, turn_reward_2=0.0312, turn_reward_3=0.0417, turn_reward_4=0.0208, turn_reward_5=0.0104, turn_reward_6=0.0312, turn_reward_7=0.0312, milestones_achieved=1.67, mil
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+[ram after gather] free=1537G shmem=6G
+
+Migration guide:
+  # Before (deprecated):
+  await model.train(trajectory_groups, config=TrainConfig(learning_rate=5e-6))
+
+  # After (recommended):
+  result = await backend.train(model, trajectory_groups, learning_rate=5e-6)
+  await model.log(trajectory_groups, metrics=result.metrics, step=result.step, split='train')
+
+Key differences:
+  - backend.train() does NOT automatically log trajectories or metrics
+  - backend.train() returns a TrainResult with step, metrics, and checkpoint info
+  - Each backend has its own type-checked parameters (no more generic config objects)
+  await model.train(trajectory_groups,
+Packed 24 trajectories into 24 sequences of length 8192
+train: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [01:21<00:00,  3.38s/it, loss/train=0.169, loss/grad_norm=0.149, loss/learning_rate=5e-6, loss/entropy=0.211]
+Iterating dataset:   0%|                                                                                                                                                                                                    | 1/3320 [05:38<312:22:40, 338.83s/batch]
+[ram after train    ] free=1521G shmem=20G
+
+--- Step 1 | Epoch 0 | Cases [1277, 617, 214] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1520G shmem=20G
+Packed 24 trajectories into 24 sequences of length 8192
+Iterating dataset:   0%|                                                                                                                                                                                                    | 2/3320 [11:34<321:14:00, 348.54s/batch]
+[ram after train    ] free=1520G shmem=20G
+
+--- Step 2 | Epoch 0 | Cases [1364, 1842, 1635] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[chat_json] JSON parse failed, raw tail: ...''
+Judge attempt 0 failed: name 'attempt' is not defined
+[chat_json] JSON parse failed, raw tail: ...''
+Judge attempt 1 failed: name 'attempt' is not defined
+[chat_json] JSON parse failed, raw tail: ...''
+Judge attempt 2 failed: name 'attempt' is not defined
+[ram after gather] free=1520G shmem=20G
+Packed 24 trajectories into 24 sequences of length 8192
+Iterating dataset:   0%|▏                                                                                                                                                                                                   | 3/3320 [16:51<308:04:34, 334.36s/batch]
+[ram after train    ] free=1521G shmem=20G
+
+--- Step 3 | Epoch 0 | Cases [378, 287, 1852] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+[ram after gather] free=1519G shmem=20G
+Packed 24 trajectories into 24 sequences of length 8192
+Iterating dataset:   0%|▏                                                                                                                                                                                                   | 4/3320 [22:22<306:38:55, 332.91s/batch]/workspace/myenv/lib/python3.12/site-packages/cn2an/transform.py:139: UserWarning: 不符合格式的数据：万
+[ram after train    ] free=1519G shmem=20G
+
+--- Step 4 | Epoch 0 | Cases [124, 971, 550] ---
+  warn(str(e))                                                                                                                                                                                                                                | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+gather: 100%|█| 24/24 [03:52<00:00,  9.70s/it, reward=0, turn_reward_0=0.271, turn_reward_1=0.115, turn_reward_2=0.0104, turn_reward_3=0.0312, milestones_achieved=1.67, milestone_frac=0.556, law_found=0.25, milestone_rejections=1.42, milestone_judge_failures=0,
+train: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 22/22 [01:07<00:00,  3.06s/it, loss/train=0.227, loss/grad_norm=0.571, loss/learning_rate=5e-6, loss/entropy=0.245]
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+[ram after gather] free=1519G shmem=20G
+Packed 24 trajectories into 22 sequences of length 8192
+gather: 100%|█| 24/24 [06:27<00:00, 16.16s/it, reward=0, turn_reward_0=0.312, turn_reward_1=0.122, milestones_achieved=1.75, milestone_frac=0.681, law_found=0.125, milestone_rejections=0.292, milestone_judge_failures=0, searches=1.25, turn_reward_2=0.0435, turn
+[ram after train    ] free=1519G shmem=20G
+
+--- Step 5 | Epoch 0 | Cases [1823, 992, 1545] ---
+train: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 23/23 [00:49<00:00,  2.14s/it, loss/train=-0.0153, loss/grad_norm=0.0139, loss/learning_rate=5e-6, loss/entropy=0.188]
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+Judge attempt 0 failed: 'NoneType' object is not subscriptable
+[ram after gather] free=1519G shmem=20G
+Packed 24 trajectories into 23 sequences of length 6144
+Iterating dataset:   0%|▎                                                                                                                                                                                                   | 6/3320 [34:40<332:15:14, 360.93s/batch]
+[ram after train    ] free=1519G shmem=20G
+
+--- Step 6 | Epoch 0 | Cases [794, 147, 312] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 23 sequences of length 8192
+Iterating dataset:   0%|▍                                                                                                                                                                                                   | 7/3320 [41:03<338:37:40, 367.96s/batch]
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 7 | Epoch 0 | Cases [279, 797, 1653] ---
+gather:   4%|▎      | 1/24 [00:48<18:30, 48.26s/it, reward=0, turn_reward_0=0.5, turn_reward_1=0.25, turn_reward_2=0.25, milestones_achieved=3, milestone_frac=1, law_found=1, milestone_rejections=0, milestone_judge_failures=0, searches=3, completion_tokens=288]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 23 sequences of length 8192
+Iterating dataset:   0%|▍                                                                                                                                                                                                   | 8/3320 [46:30<326:34:51, 354.98s/batch]/workspace/myenv/lib/python3.12/site-packages/cn2an/transform.py:139: UserWarning: 不符合格式的数据：千
+[ram after train    ] free=1519G shmem=20G
+
+--- Step 8 | Epoch 0 | Cases [944, 260, 1848] ---
+  warn(str(e))                                                                                                                                                                                                                                | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+gather: 100%|█| 24/24 [04:07<00:00, 10.32s/it, reward=0, turn_reward_0=0.26, turn_reward_1=0.135, turn_reward_2=0.0521, turn_reward_3=0.0312, turn_reward_4=0.0417, milestones_achieved=2, milestone_frac=0.667, law_found=0.167, milestone_rejections=0.708, milesto
+train: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 23/23 [01:05<00:00,  2.86s/it, loss/train=-0.114, loss/grad_norm=0.0818, loss/learning_rate=5e-6, loss/entropy=0.233]
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1519G shmem=20G
+Packed 24 trajectories into 23 sequences of length 8192
+Iterating dataset:   0%|▌                                                                                                                                                                                                   | 9/3320 [51:44<314:48:33, 342.29s/batch]/workspace/myenv/lib/python3.12/site-packages/cn2an/transform.py:139: UserWarning: 不符合格式的数据：一百四一
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 9 | Epoch 0 | Cases [1939, 1559, 1737] ---
+  warn(str(e))                                                                                                                                                                                                                                | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+gather: 100%|█| 24/24 [04:29<00:00, 11.25s/it, reward=0, turn_reward_0=0.25, turn_reward_1=0.0625, turn_reward_2=0.0729, turn_reward_3=0.0312, turn_reward_4=0.0104, turn_reward_5=0.0312, turn_reward_6=0.0208, turn_reward_7=0.0104, milestones_achieved=1.83, mile
+train: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [01:09<00:00,  2.88s/it, loss/train=0.508, loss/grad_norm=0.411, loss/learning_rate=5e-6, loss/entropy=0.252]
+[ram after gather] free=1519G shmem=20G
+Packed 24 trajectories into 24 sequences of length 8192
+gather: 100%|█| 24/24 [04:02<00:00, 10.12s/it, reward=0, turn_reward_0=0.188, turn_reward_1=0.125, turn_reward_2=0.0521, turn_reward_3=0.0312, milestones_achieved=1.79, milestone_frac=0.597, law_found=0.167, milestone_rejections=2.25, milestone_judge_failures=0
+[ram after train    ] free=1519G shmem=20G
+
+--- Step 10 | Epoch 0 | Cases [1776, 404, 1461] ---
+train: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 23/23 [01:06<00:00,  2.88s/it, loss/train=0.0883, loss/grad_norm=0.063, loss/learning_rate=5e-6, loss/entropy=0.215]
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 23 sequences of length 8192
+gather: 100%|█| 10/10 [03:15<00:00, 19.52s/it, reward=0, turn_reward_0=0.125, turn_reward_1=0.15, turn_reward_2=0.075, turn_reward_3=0, turn_reward_4=0, turn_reward_5=0, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.4, milestone_frac=0.467, law_found=
+[ram after train    ] free=1519G shmem=20G
+gather: 100%|█| 10/10 [02:27<00:00, 14.79s/it, reward=0, turn_reward_0=0.1, turn_reward_1=0.075, turn_reward_2=0.05, turn_reward_3=0, turn_reward_4=0.05, turn_reward_5=0.025, turn_reward_6=0.075, turn_reward_7=0.025, milestones_achieved=1.6, milestone_frac=0.53
+gather: 100%|█| 10/10 [02:42<00:00, 16.30s/it, reward=0, turn_reward_0=0.25, turn_reward_1=0.1, turn_reward_2=0, turn_reward_3=0.075, turn_reward_4=0, turn_reward_5=0, turn_reward_6=0.025, turn_reward_7=0, milestones_achieved=1.7, milestone_frac=0.567, law_foun
+[milestone-judge] failed after 5 attempts: empty choices: None
+gather: 100%|█| 10/10 [02:20<00:00, 14.02s/it, reward=0, turn_reward_0=0.433, turn_reward_1=0.167, milestones_achieved=1.7, milestone_frac=0.85, law_found=0.4, milestone_rejections=0.6, milestone_judge_failures=0, searches=4.8, turn_reward_2=0.0417, turn_reward
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+gather: 100%|█| 10/10 [02:44<00:00, 16.45s/it, reward=0, turn_reward_0=0.15, turn_reward_1=0.1, turn_reward_2=0.025, turn_reward_3=0, turn_reward_4=0.025, turn_reward_5=0.025, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.3, milestone_frac=0.433, law_
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+Attempt bricked because of Unterminated string starting at: line 1 column 34 (char 33), retrying in 1s, 1/5
+search was found
+gather: 100%|█| 10/10 [02:59<00:00, 17.92s/it, reward=0, turn_reward_0=0.2, turn_reward_1=0.075, turn_reward_2=0, turn_reward_3=0.025, turn_reward_4=0.025, turn_reward_5=0.025, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.2, milestone_frac=0.4, law_f
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+gather: 100%|█| 10/10 [02:05<00:00, 12.51s/it, reward=0, turn_reward_0=0.25, turn_reward_1=0.125, turn_reward_2=0.1, turn_reward_3=0.05, turn_reward_4=0, turn_reward_5=0, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.8, milestone_frac=0.6, law_found=0
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+gather: 100%|█| 10/10 [02:05<00:00,  2.65s/it, reward=0, turn_reward_0=0.25, turn_reward_1=0.125, turn_reward_2=0.1, turn_reward_3=0.05, turn_reward_4=0, turn_reward_5=0, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.8, milestone_frac=0.6, law_found=0
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+gather: 100%|█| 10/10 [02:08<00:00, 12.82s/it, reward=0, turn_reward_0=0.25, turn_reward_1=0.05, turn_reward_2=0, turn_reward_3=0.025, turn_reward_4=0, turn_reward_5=0.025, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.4, milestone_frac=0.467, law_fou
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+gather: 100%|█| 10/10 [02:31<00:00, 15.10s/it, reward=0, turn_reward_0=0.3, turn_reward_1=0.2, turn_reward_2=0.1, turn_reward_3=0.075, milestones_achieved=2.6, milestone_frac=0.867, law_found=0.3, milestone_rejections=0.3, milestone_judge_failures=0, searches=4
+Iterating dataset:   0%|▋                                                                                                                                                                                                | 11/3320 [1:27:50<731:29:19, 795.82s/batch]
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+[EVAL @ step 10] milestone_frac=0.608 | law_found=0.200 | success=0.110 | turns_used=7.620
+
+--- Step 11 | Epoch 0 | Cases [162, 1385, 1119] ---
+gather:  12%|███                     | 3/24 [00:31<02:36,  7.46s/it, reward=0, turn_reward_0=0.667, turn_reward_1=0.333, milestones_achieved=2, milestone_frac=1, law_found=1, milestone_rejections=0, milestone_judge_failures=0, searches=4, completion_tokens=283]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 22 sequences of length 6144
+Iterating dataset:   0%|▋                                                                                                                                                                                                | 12/3320 [1:32:46<591:28:00, 643.68s/batch]
+[ram after train    ] free=1517G shmem=20G
+
+--- Step 12 | Epoch 0 | Cases [391, 548, 1985] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 24 sequences of length 8192
+Iterating dataset:   0%|▊                                                                                                                                                                                                | 13/3320 [1:38:02<500:03:28, 544.36s/batch]
+[ram after train    ] free=1517G shmem=20G
+
+--- Step 13 | Epoch 0 | Cases [1594, 261, 86] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1517G shmem=20G
+Packed 24 trajectories into 24 sequences of length 8192
+Iterating dataset:   0%|▊                                                                                                                                                                                                | 14/3320 [1:43:05<433:05:21, 471.60s/batch]
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 14 | Epoch 0 | Cases [259, 644, 843] ---
+gather: 100%|█| 24/24 [03:07<00:00,  5.75s/it, reward=0, turn_reward_0=0.24, turn_reward_1=0.125, turn_reward_2=0.0208, turn_reward_3=0.0729, milestones_achieved=1.71, milestone_frac=0.569, law_found=0.375, milestone_rejections=1.88, milestone_judge_failures=0,
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+[ram after gather] free=1519G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+Iterating dataset:   0%|▊                                                                                                                                                                                                | 15/3320 [1:48:15<388:19:25, 422.99s/batch]
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 15 | Epoch 0 | Cases [545, 1568, 422] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 22 sequences of length 8192
+Iterating dataset:   0%|▉                                                                                                                                                                                                | 16/3320 [1:53:32<358:48:52, 390.96s/batch]
+[ram after train    ] free=1517G shmem=20G
+
+--- Step 16 | Epoch 0 | Cases [317, 917, 1192] ---
+gather: 100%|█| 24/24 [02:48<00:00,  1.66s/it, reward=0, turn_reward_0=0.26, turn_reward_1=0.0938, turn_reward_2=0.0208, turn_reward_3=0.0417, turn_reward_4=0.0312, turn_reward_5=0, turn_reward_6=0.0104, turn_reward_7=0.0208, milestones_achieved=1.67, milestone
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+gather: 100%|█| 24/24 [04:03<00:00, 10.13s/it, reward=0, turn_reward_0=0.271, turn_reward_1=0.0521, turn_reward_2=0.0417, turn_reward_3=0.0104, turn_reward_4=0.0417, turn_reward_5=0.0104, turn_reward_6=0.0208, turn_reward_7=0.0104, milestones_achieved=1.67, mil
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 17 | Epoch 0 | Cases [1206, 254, 198] ---
+train: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [00:49<00:00,  2.08s/it, loss/train=0.117, loss/grad_norm=0.13, loss/learning_rate=5e-6, loss/entropy=0.13]
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+CHECKING LAW:
+[ram after gather] free=1517G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+gather: 100%|█| 24/24 [03:54<00:00,  9.78s/it, reward=0, turn_reward_0=0.344, turn_reward_1=0.0625, turn_reward_2=0.0417, turn_reward_3=0.0104, turn_reward_4=0.0417, turn_reward_5=0, turn_reward_6=0.0139, turn_reward_7=0.0109, milestones_achieved=1.62, mileston
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 18 | Epoch 0 | Cases [1021, 125, 127] ---
+train: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [00:50<00:00,  2.10s/it, loss/train=0.236, loss/grad_norm=0.171, loss/learning_rate=5e-6, loss/entropy=0.276]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+Iterating dataset:   1%|█                                                                                                                                                                                                | 19/3320 [2:08:02<297:13:17, 324.14s/batch]
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 19 | Epoch 0 | Cases [834, 1071, 684] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+[ram after gather] free=1517G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+gather: 100%|█| 24/24 [04:22<00:00, 10.96s/it, reward=0, turn_reward_0=0.281, turn_reward_1=0.115, turn_reward_2=0.0729, milestones_achieved=2.04, milestone_frac=0.681, law_found=0.208, milestone_rejections=1.29, milestone_judge_failures=0, searches=4, turn_rew
+[ram after train    ] free=1517G shmem=20G
+
+--- Step 20 | Epoch 0 | Cases [445, 530, 352] ---
+train: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [00:50<00:00,  2.12s/it, loss/train=1.73, loss/grad_norm=0.896, loss/learning_rate=5e-6, loss/entropy=1.08]
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+gather: 100%|█| 10/10 [02:49<00:00, 16.99s/it, reward=0, turn_reward_0=0.15, turn_reward_1=0.1, turn_reward_2=0.075, turn_reward_3=0.05, turn_reward_4=0.05, turn_reward_5=0.025, turn_reward_6=0.025, turn_reward_7=0, milestones_achieved=1.9, milestone_frac=0.633
+[ram after train    ] free=1517G shmem=20G
+gather: 100%|█| 10/10 [02:35<00:00, 15.51s/it, reward=0, turn_reward_0=0.15, turn_reward_1=0.05, turn_reward_2=0.05, turn_reward_3=0.05, turn_reward_4=0, turn_reward_5=0, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.2, milestone_frac=0.4, law_found=0
+gather: 100%|█| 10/10 [02:29<00:00, 14.98s/it, reward=0, turn_reward_0=0.275, turn_reward_1=0.1, turn_reward_2=0.025, turn_reward_3=0.05, turn_reward_4=0.025, turn_reward_5=0, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.8, milestone_frac=0.6, law_fo
+gather: 100%|█| 10/10 [02:26<00:00, 14.70s/it, reward=0, turn_reward_0=0.4, turn_reward_1=0.167, milestones_achieved=1.5, milestone_frac=0.75, law_found=0.3, milestone_rejections=0.2, milestone_judge_failures=0, searches=3, turn_reward_2=0, turn_reward_3=0.037,
+search was found
+CHECKING LAW:
+LAW FOUND
+gather: 100%|█| 10/10 [02:38<00:00, 15.81s/it, reward=0, turn_reward_0=0.1, turn_reward_1=0.025, turn_reward_2=0.025, turn_reward_3=0, turn_reward_4=0.025, turn_reward_5=0.05, turn_reward_6=0, turn_reward_7=0, milestones_achieved=0.9, milestone_frac=0.3, law_fo
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+gather: 100%|█| 10/10 [03:29<00:00, 20.95s/it, reward=0, turn_reward_0=0.2, turn_reward_1=0.125, turn_reward_2=0.05, turn_reward_3=0, turn_reward_4=0, turn_reward_5=0, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.2, milestone_frac=0.4, law_found=0.3,
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+gather: 100%|█| 10/10 [02:52<00:00, 17.25s/it, reward=0, turn_reward_0=0.225, turn_reward_1=0.075, turn_reward_2=0.125, turn_reward_3=0, turn_reward_4=0, turn_reward_5=0, turn_reward_6=0, turn_reward_7=0.025, milestones_achieved=1.6, milestone_frac=0.533, law_f
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+gather: 100%|█| 10/10 [02:52<00:00,  8.19s/it, reward=0, turn_reward_0=0.225, turn_reward_1=0.075, turn_reward_2=0.125, turn_reward_3=0, turn_reward_4=0, turn_reward_5=0, turn_reward_6=0, turn_reward_7=0.025, milestones_achieved=1.6, milestone_frac=0.533, law_f
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+gather: 100%|█| 10/10 [03:00<00:00, 11.29s/it, reward=0, turn_reward_0=0.3, turn_reward_1=0.2, turn_reward_2=0.075, turn_reward_3=0.025, turn_reward_4=0.025, milestones_achieved=2.1, milestone_frac=0.7, law_found=0.6, milestone_rejections=2.7, milestone_judge_f
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+gather: 100%|█| 10/10 [02:19<00:00, 13.90s/it, reward=0, turn_reward_0=0.225, turn_reward_1=0.175, turn_reward_2=0.05, turn_reward_3=0.025, turn_reward_4=0.05, turn_reward_5=0.05, turn_reward_6=0, turn_reward_7=0, milestones_achieved=2.3, milestone_frac=0.767, 
+search was found
+CHECKING LAW:
+LAW FOUND
+Iterating dataset:   1%|█▏                                                                                                                                                                                               | 21/3320 [2:45:06<733:40:20, 800.61s/batch]
+[EVAL @ step 20] milestone_frac=0.562 | law_found=0.160 | success=0.020 | turns_used=7.910
+
+--- Step 21 | Epoch 0 | Cases [1972, 931, 607] ---
+gather:   4%| | 1/24 [01:32<35:33, 92.78s/it, reward=0, turn_reward_0=0.5, turn_reward_1=0.25, turn_reward_2=0, turn_reward_3=0, turn_reward_4=0, turn_reward_5=0.25, milestones_achieved=3, milestone_frac=1, law_found=1, milestone_rejections=0, milestone_judge_f
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+[milestone-judge] failed after 5 attempts: empty choices: None
+search was found
+Attempt bricked because of Unterminated string starting at: line 1 column 304 (char 303), retrying in 1s, 1/5
+Attempt bricked because of Expecting ':' delimiter: line 1 column 184 (char 183), retrying in 2s, 2/5
+[milestone-judge] failed after 5 attempts: empty choices: None
+Attempt bricked because of Unterminated string starting at: line 1 column 304 (char 303), retrying in 4s, 3/5
+Attempt bricked because of Unterminated string starting at: line 1 column 304 (char 303), retrying in 8s, 4/5
+search was found
+Attempt bricked because of Unterminated string starting at: line 1 column 304 (char 303), retrying in 16s, 5/5
+[milestone-judge] failed after 5 attempts: Unterminated string starting at: line 1 column 304 (char 303)
+search was found
+search was found
+search was found
+search was found
+search was found
+[chat_json] JSON parse failed, raw tail: ...''
+Judge attempt 0 failed: name 'attempt' is not defined
+[ram after gather] free=1517G shmem=20G
+Packed 24 trajectories into 24 sequences of length 8192
+Iterating dataset:   1%|█▎                                                                                                                                                                                               | 22/3320 [2:51:07<612:29:42, 668.58s/batch]
+[ram after train    ] free=1517G shmem=20G
+
+--- Step 22 | Epoch 0 | Cases [1336, 129, 1529] ---
+gather:   8%| | 2/24 [02:14<20:44, 56.56s/it, reward=0, turn_reward_0=0.25, turn_reward_1=0.25, turn_reward_2=0.125, turn_reward_3=0, turn_reward_4=0, turn_reward_5=0.125, turn_reward_6=0.125, milestones_achieved=3, milestone_frac=1, law_found=0.5, milestone_re
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+[ram after gather] free=1517G shmem=20G
+Packed 24 trajectories into 24 sequences of length 8192
+Iterating dataset:   1%|█▎                                                                                                                                                                                               | 23/3320 [2:56:43<520:54:23, 568.78s/batch]
+[ram after train    ] free=1517G shmem=20G
+
+--- Step 23 | Epoch 0 | Cases [1016, 158, 165] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+[ram after gather] free=1519G shmem=20G
+Packed 24 trajectories into 24 sequences of length 8192
+gather: 100%|█| 24/24 [03:12<00:00,  8.04s/it, reward=0, turn_reward_0=0.219, turn_reward_1=0.125, turn_reward_2=0.0625, turn_reward_3=0.0312, turn_reward_4=0.0312, turn_reward_5=0.0312, milestones_achieved=1.88, milestone_frac=0.625, law_found=0.167, milestone
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 24 | Epoch 0 | Cases [290, 1978, 1920] ---
+train: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [00:50<00:00,  2.11s/it, loss/train=-0.0418, loss/grad_norm=0.0483, loss/learning_rate=5e-6, loss/entropy=0.132]
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+[ram after gather] free=1517G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+gather: 100%|█| 24/24 [03:29<00:00,  8.73s/it, reward=0, turn_reward_0=0.326, turn_reward_1=0.122, turn_reward_2=0.0556, turn_reward_3=0.0278, milestones_achieved=1.92, milestone_frac=0.736, law_found=0.208, milestone_rejections=0.667, milestone_judge_failures=
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 25 | Epoch 0 | Cases [1628, 1150, 238] ---
+train: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [00:51<00:00,  2.13s/it, loss/train=-0.193, loss/grad_norm=0.195, loss/learning_rate=5e-6, loss/entropy=0.138]
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+Iterating dataset:   1%|█▌                                                                                                                                                                                               | 26/3320 [3:09:32<332:37:30, 363.52s/batch]
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 26 | Epoch 0 | Cases [987, 118, 557] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 16 sequences of length 8192
+gather: 100%|█| 24/24 [04:49<00:00, 12.07s/it, reward=0, turn_reward_0=0.229, turn_reward_1=0.0729, turn_reward_2=0.0521, turn_reward_3=0.0417, turn_reward_4=0.0312, turn_reward_5=0.0521, milestones_achieved=1.83, milestone_frac=0.611, law_found=0.208, mileston
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 27 | Epoch 0 | Cases [438, 705, 1333] ---
+train: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [00:50<00:00,  2.10s/it, loss/train=-0.177, loss/grad_norm=0.166, loss/learning_rate=5e-6, loss/entropy=0.198]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+CHECKING LAW:
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+gather: 100%|█| 24/24 [03:52<00:00,  9.68s/it, reward=0, turn_reward_0=0.302, turn_reward_1=0.0625, turn_reward_2=0.0208, turn_reward_3=0.0104, turn_reward_4=0.0312, turn_reward_5=0.0104, turn_reward_6=0.0104, turn_reward_7=0.0104, milestones_achieved=1.58, mil
+[ram after train    ] free=1517G shmem=20G
+
+--- Step 28 | Epoch 0 | Cases [226, 1941, 872] ---
+train: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [00:50<00:00,  2.10s/it, loss/train=-0.183, loss/grad_norm=0.0832, loss/learning_rate=5e-6, loss/entropy=0.551]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+[ram after gather] free=1517G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+Iterating dataset:   1%|█▋                                                                                                                                                                                               | 29/3320 [3:23:59<289:46:34, 316.98s/batch]
+[ram after train    ] free=1517G shmem=20G
+
+--- Step 29 | Epoch 0 | Cases [1115, 200, 1414] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+[ram after gather] free=1517G shmem=20G
+Packed 24 trajectories into 24 sequences of length 8192
+Iterating dataset:   1%|█▋                                                                                                                                                                                               | 30/3320 [3:29:23<291:34:10, 319.04s/batch]
+[ram after train    ] free=1517G shmem=20G
+
+--- Step 30 | Epoch 0 | Cases [304, 1312, 748] ---
+gather: 100%|█| 24/24 [03:00<00:00,  6.16s/it, reward=0, turn_reward_0=0.26, turn_reward_1=0.104, turn_reward_2=0.0521, turn_reward_3=0.0208, turn_reward_4=0.0435, milestones_achieved=1.75, milestone_frac=0.583, law_found=0.292, milestone_rejections=1.42, miles
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+[chat_json] JSON parse failed, raw tail: ...' {"stuffing_penalty": false, "hallucination_penalty": false},\n    "tier_reasoning": "作为最终陈述，智能体展现了极高的反驳针对性和涵摄深度。不仅再次强调了监控录像的技术性缺陷，还明确提出了“根本性断裂”的概念，并成功地将证据问题与“情节显著轻微”的法律后果进行了精准涵摄，逻辑闭环完整，论证有力。"\n    }\n}\n'
+Judge attempt 0 failed: name 'attempt' is not defined
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+gather: 100%|█| 10/10 [02:36<00:00, 15.60s/it, reward=0, turn_reward_0=0.15, turn_reward_1=0.05, turn_reward_2=0.075, turn_reward_3=0.125, turn_reward_4=0.025, turn_reward_5=0, turn_reward_6=0.025, turn_reward_7=0, milestones_achieved=1.8, milestone_frac=0.6, l
+[ram after train    ] free=1518G shmem=20G
+gather: 100%|█| 10/10 [03:03<00:00, 18.39s/it, reward=0, turn_reward_0=0.125, turn_reward_1=0.05, turn_reward_2=0.025, turn_reward_3=0, turn_reward_4=0.025, turn_reward_5=0.025, turn_reward_6=0, turn_reward_7=0.025, milestones_achieved=1, milestone_frac=0.333, 
+gather: 100%|█| 10/10 [03:00<00:00, 18.03s/it, reward=0, turn_reward_0=0.325, turn_reward_1=0.1, turn_reward_2=0.05, turn_reward_3=0.025, turn_reward_4=0, turn_reward_5=0.025, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.7, milestone_frac=0.567, law_
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+gather: 100%|█| 10/10 [03:00<00:00,  9.90s/it, reward=0, turn_reward_0=0.325, turn_reward_1=0.1, turn_reward_2=0.05, turn_reward_3=0.025, turn_reward_4=0, turn_reward_5=0.025, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.7, milestone_frac=0.567, law_
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+gather: 100%|█| 10/10 [02:53<00:00, 17.37s/it, reward=0, turn_reward_0=0.15, turn_reward_1=0.025, turn_reward_2=0, turn_reward_3=0.05, turn_reward_4=0.05, turn_reward_5=0, turn_reward_6=0.05, turn_reward_7=0.025, milestones_achieved=1.4, milestone_frac=0.467, l
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+gather: 100%|█| 10/10 [03:23<00:00, 20.34s/it, reward=0, turn_reward_0=0.125, turn_reward_1=0.075, turn_reward_2=0.075, turn_reward_3=0.075, turn_reward_4=0.05, turn_reward_5=0.05, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.7, milestone_frac=0.567,
+search was found
+CHECKING LAW:
+gather: 100%|█| 10/10 [02:55<00:00, 17.54s/it, reward=0, turn_reward_0=0.15, turn_reward_1=0.1, turn_reward_2=0.05, turn_reward_3=0, turn_reward_4=0, turn_reward_5=0.025, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1, milestone_frac=0.333, law_found=0
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+gather: 100%|█| 10/10 [02:46<00:00, 16.62s/it, reward=0, turn_reward_0=0.3, turn_reward_1=0.2, turn_reward_2=0.125, turn_reward_3=0, turn_reward_4=0.025, milestones_achieved=2.5, milestone_frac=0.833, law_found=0.4, milestone_rejections=1.9, milestone_judge_fai
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+search was found
+search was found
+gather: 100%|█| 10/10 [02:19<00:00, 13.98s/it, reward=0, turn_reward_0=0.225, turn_reward_1=0.025, turn_reward_2=0.05, turn_reward_3=0.025, turn_reward_4=0.025, turn_reward_5=0, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.3, milestone_frac=0.433, la
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+CHECKING LAW:
+search was found
+gather: 100%|█| 10/10 [02:26<00:00, 14.62s/it, reward=0, turn_reward_0=0.225, turn_reward_1=0.15, turn_reward_2=0.1, turn_reward_3=0.05, turn_reward_4=0, turn_reward_5=0.025, turn_reward_6=0.025, turn_reward_7=0.025, milestones_achieved=2.4, milestone_frac=0.8,
+search was found
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+gather: 100%|█| 24/24 [04:13<00:00, 10.57s/it, reward=0, turn_reward_0=0.208, turn_reward_1=0.0729, turn_reward_2=0.0625, turn_reward_3=0.0208, turn_reward_4=0.0208, turn_reward_5=0.0312, turn_reward_6=0.0104, turn_reward_7=0, milestones_achieved=1.58, mileston
+[milestone-judge] failed after 5 attempts: empty choices: None
+[EVAL @ step 30] milestone_frac=0.578 | law_found=0.180 | success=0.050 | turns_used=7.870
+
+--- Step 31 | Epoch 0 | Cases [179, 1196, 1830] ---
+train: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [00:50<00:00,  2.09s/it, loss/train=-0.342, loss/grad_norm=0.159, loss/learning_rate=5e-6, loss/entropy=0.464]
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+[ram after gather] free=1518G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+Iterating dataset:   1%|█▊                                                                                                                                                                                               | 32/3320 [4:07:15<603:45:15, 661.04s/batch]
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 32 | Epoch 0 | Cases [1995, 1757, 1512] ---
+gather: 100%|█| 24/24 [04:24<00:00, 19.40s/it, reward=0, turn_reward_0=0.125, turn_reward_1=0.104, turn_reward_2=0.0312, turn_reward_3=0.0208, turn_reward_4=0, turn_reward_5=0.0208, turn_reward_6=0, turn_reward_7=0.0104, milestones_achieved=1.12, milestone_frac
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+search was found
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+search was found
+search was found
+CHECKING LAW:
+CHECKING LAW:
+search was found
+CHECKING LAW:
+search was found
+CHECKING LAW:
+[ram after gather] free=1517G shmem=20G
+Packed 24 trajectories into 24 sequences of length 6144
+Iterating dataset:   1%|█▉                                                                                                                                                                                               | 33/3320 [4:14:33<542:13:43, 593.86s/batch]
+[ram after train    ] free=1518G shmem=20G
+
+--- Step 33 | Epoch 0 | Cases [789, 1370, 57] ---
+gather:  96%|▉| 23/24 [03:27<00:11, 11.36s/it, reward=0, turn_reward_0=0.348, turn_reward_1=0.134, milestones_achieved=1.96, milestone_frac=0.862, law_found=0.261, milestone_rejections=1.78, milestone_judge_failures=0.13, searches=4.65, turn_reward_2=0.0595, tu
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+search was found
+search was found
+[milestone-judge] failed after 5 attempts: empty choices: None
+CHECKING LAW:
+search was found
+search was found
+search was found
+[milestone-judge] failed after 5 attempts: empty choices: None
+[milestone-judge] failed after 5 attempts: empty choices: None
+search was found
+[chat_json] JSON parse failed, raw tail: ...''
+Judge attempt 0 failed: name 'attempt' is not defined
+[chat_json] JSON parse failed, raw tail: ...''
+Judge attempt 1 failed: name 'attempt' is not defined
+[chat_json] JSON parse failed, raw tail: ...''
+Judge attempt 2 failed: name 'attempt' is not defined
+    return loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 92, in run_until_complete
+    self._run_once()
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 115, in _run_once
+    event_list = self._selector.select(timeout)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/selectors.py", line 468, in select
+    fd_event_list = self._selector.poll(timeout, max_ev)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/GRPO-SingleLawyer/ART_train.py", line 214, in <module>
+    asyncio.run(train())
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 35, in run
+    loop.run_until_complete(task)
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 92, in run_until_complete
+    self._run_once()
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 115, in _run_once
+    event_list = self._selector.select(timeout)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/selectors.py", line 468, in select
+    fd_event_list = self._selector.poll(timeout, max_ev)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Exception ignored in: <module 'threading' from '/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/threading.py'>
+Traceback (most recent call last):
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/threading.py", line 1594, in _shutdown
+    atexit_call()
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/concurrent/futures/thread.py", line 31, in _python_exit
+    t.join()
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/threading.py", line 1149, in join
+    self._wait_for_tstate_lock()
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/threading.py", line 1169, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt:

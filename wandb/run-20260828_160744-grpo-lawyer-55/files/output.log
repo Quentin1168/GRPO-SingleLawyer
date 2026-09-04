@@ -1,0 +1,406 @@
+[34m[1mwandb[0m: Detected [huggingface_hub.inference, litellm, openai] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Weave is installed but not imported. Add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai/
+Iterating dataset:   0%|                                                                                                                                                                                                                 | 1/3320 [00:00<?, ?batch/s]'(ReadTimeoutError("HTTPSConnectionPool(host='huggingface.co', port=443): Read timed out. (read timeout=10)"), '(Request ID: be683043-1b4b-4d3c-b3e8-34088b9250ec)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/config.json
+
+--- Step 1 | Epoch 0 | Cases [1277, 617, 214] ---
+Retrying in 1s [Retry 1/5].
+
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+{('行为在客观上虽然造成了损害结果，但是不是出于故意或者过失，而是由于不能抗拒或者不能预见的原因所引起的，不是犯罪。', '中华人民共和国刑法第十六条')}
+{('行为在客观上虽然造成了损害结果，但是不是出于故意或者过失，而是由于不能抗拒或者不能预见的原因所引起的，不是犯罪。', '中华人民共和国刑法第十六条')}
+{('行为在客观上虽然造成了损害结果，但是不是出于故意或者过失，而是由于不能抗拒或者不能预见的原因所引起的，不是犯罪。', '中华人民共和国刑法第十六条')}
+{('行为在客观上虽然造成了损害结果，但是不是出于故意或者过失，而是由于不能抗拒或者不能预见的原因所引起的，不是犯罪。', '中华人民共和国刑法第十六条')}
+{('行为在客观上虽然造成了损害结果，但是不是出于故意或者过失，而是由于不能抗拒或者不能预见的原因所引起的，不是犯罪。', '中华人民共和国刑法第十六条')}
+{('行为在客观上虽然造成了损害结果，但是不是出于故意或者过失，而是由于不能抗拒或者不能预见的原因所引起的，不是犯罪。', '中华人民共和国刑法第十六条')}
+{('行为在客观上虽然造成了损害结果，但是不是出于故意或者过失，而是由于不能抗拒或者不能预见的原因所引起的，不是犯罪。', '中华人民共和国刑法第十六条')}
+{('行为在客观上虽然造成了损害结果，但是不是出于故意或者过失，而是由于不能抗拒或者不能预见的原因所引起的，不是犯罪。', '中华人民共和国刑法第十六条')}
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+{('行为在客观上虽然造成了损害结果，但是不是出于故意或者过失，而是由于不能抗拒或者不能预见的原因所引起的，不是犯罪。', '中华人民共和国刑法第十六条')}
+[ram after gather] free=1495G shmem=7G
+
+Migration guide:
+  # Before (deprecated):
+  await model.train(trajectory_groups, config=TrainConfig(learning_rate=5e-6))
+
+  # After (recommended):
+  result = await backend.train(model, trajectory_groups, learning_rate=5e-6)
+  await model.log(trajectory_groups, metrics=result.metrics, step=result.step, split='train')
+
+Key differences:
+  - backend.train() does NOT automatically log trajectories or metrics
+  - backend.train() returns a TrainResult with step, metrics, and checkpoint info
+  - Each backend has its own type-checked parameters (no more generic config objects)
+  await model.train(trajectory_groups,
+Packed 24 trajectories into 24 sequences of length 6144
+train: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [01:03<00:00,  2.66s/it, loss/train=0.122, loss/grad_norm=0.122, loss/learning_rate=5e-6, loss/entropy=0.18]
+gather: 100%|█| 24/24 [05:16<00:00, 13.19s/it, reward=0, turn_reward_0=0.229, turn_reward_1=0.0938, turn_reward_2=0.0521, turn_reward_3=0, turn_reward_4=0.0104, turn_reward_5=0.0104, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.46, milestone_frac=0.4
+[ram after train    ] free=1482G shmem=20G
+
+--- Step 2 | Epoch 0 | Cases [1364, 1842, 1635] ---
+train: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [01:11<00:00,  3.00s/it, loss/train=0.121, loss/grad_norm=0.113, loss/learning_rate=5e-6, loss/entropy=0.206]
+search was found
+{('犯盗窃、诈骗、抢夺罪，为窝藏赃物、抗拒抓捕或者毁灭罪证而当场使用暴力或者以暴力相威胁的，依照本法第二百六十三条的规定定罪处罚。', '中华人民共和国刑法第二百六十九条')}
+search was found
+{('犯盗窃、诈骗、抢夺罪，为窝藏赃物、抗拒抓捕或者毁灭罪证而当场使用暴力或者以暴力相威胁的，依照本法第二百六十三条的规定定罪处罚。', '中华人民共和国刑法第二百六十九条')}
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+{('犯盗窃、诈骗、抢夺罪，为窝藏赃物、抗拒抓捕或者毁灭罪证而当场使用暴力或者以暴力相威胁的，依照本法第二百六十三条的规定定罪处罚。', '中华人民共和国刑法第二百六十九条')}
+CHECKING LAW:
+LAW FOUND
+search was found
+{('犯盗窃、诈骗、抢夺罪，为窝藏赃物、抗拒抓捕或者毁灭罪证而当场使用暴力或者以暴力相威胁的，依照本法第二百六十三条的规定定罪处罚。', '中华人民共和国刑法第二百六十九条')}
+search was found
+{('犯盗窃、诈骗、抢夺罪，为窝藏赃物、抗拒抓捕或者毁灭罪证而当场使用暴力或者以暴力相威胁的，依照本法第二百六十三条的规定定罪处罚。', '中华人民共和国刑法第二百六十九条')}
+search was found
+{('犯盗窃、诈骗、抢夺罪，为窝藏赃物、抗拒抓捕或者毁灭罪证而当场使用暴力或者以暴力相威胁的，依照本法第二百六十三条的规定定罪处罚。', '中华人民共和国刑法第二百六十九条')}
+search was found
+{('犯盗窃、诈骗、抢夺罪，为窝藏赃物、抗拒抓捕或者毁灭罪证而当场使用暴力或者以暴力相威胁的，依照本法第二百六十三条的规定定罪处罚。', '中华人民共和国刑法第二百六十九条')}
+[ram after gather] free=1478G shmem=20G
+Packed 24 trajectories into 24 sequences of length 8192
+gather: 100%|█| 24/24 [04:22<00:00, 10.95s/it, reward=0, turn_reward_0=0.219, turn_reward_1=0.0625, turn_reward_2=0.0521, turn_reward_3=0.0833, turn_reward_4=0.0208, turn_reward_5=0.0208, turn_reward_6=0.0104, turn_reward_7=0.0312, milestones_achieved=1.79, mil
+[ram after train    ] free=1476G shmem=22G
+
+--- Step 3 | Epoch 0 | Cases [378, 287, 1852] ---
+train: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [00:53<00:00,  2.22s/it, loss/train=0.0467, loss/grad_norm=0.0388, loss/learning_rate=5e-6, loss/entropy=0.239]
+search was found
+search was found
+search was found
+search was found
+search was found
+{('在生产、销售的食品中掺入有毒、有害的非食品原料的，或者销售明知掺有有毒、有害的非食品原料的食品的，处五年以下有期徒刑，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处五年以上十年以下有期徒刑，并处罚金；致人死亡或者有其他特别严重情节的，依照本法第一百四十一条的规定处罚。', '中华人民共和国刑法第一百四十四条')}
+{('在生产、销售的食品中掺入有毒、有害的非食品原料的，或者销售明知掺有有毒、有害的非食品原料的食品的，处五年以下有期徒刑，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处五年以上十年以下有期徒刑，并处罚金；致人死亡或者有其他特别严重情节的，依照本法第一百四十一条的规定处罚。', '中华人民共和国刑法第一百四十四条')}
+{('在生产、销售的食品中掺入有毒、有害的非食品原料的，或者销售明知掺有有毒、有害的非食品原料的食品的，处五年以下有期徒刑，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处五年以上十年以下有期徒刑，并处罚金；致人死亡或者有其他特别严重情节的，依照本法第一百四十一条的规定处罚。', '中华人民共和国刑法第一百四十四条')}
+{('在生产、销售的食品中掺入有毒、有害的非食品原料的，或者销售明知掺有有毒、有害的非食品原料的食品的，处五年以下有期徒刑，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处五年以上十年以下有期徒刑，并处罚金；致人死亡或者有其他特别严重情节的，依照本法第一百四十一条的规定处罚。', '中华人民共和国刑法第一百四十四条')}
+{('在生产、销售的食品中掺入有毒、有害的非食品原料的，或者销售明知掺有有毒、有害的非食品原料的食品的，处五年以下有期徒刑，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处五年以上十年以下有期徒刑，并处罚金；致人死亡或者有其他特别严重情节的，依照本法第一百四十一条的规定处罚。', '中华人民共和国刑法第一百四十四条')}
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+{('在生产、销售的食品中掺入有毒、有害的非食品原料的，或者销售明知掺有有毒、有害的非食品原料的食品的，处五年以下有期徒刑，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处五年以上十年以下有期徒刑，并处罚金；致人死亡或者有其他特别严重情节的，依照本法第一百四十一条的规定处罚。', '中华人民共和国刑法第一百四十四条')}
+search was found
+{('在生产、销售的食品中掺入有毒、有害的非食品原料的，或者销售明知掺有有毒、有害的非食品原料的食品的，处五年以下有期徒刑，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处五年以上十年以下有期徒刑，并处罚金；致人死亡或者有其他特别严重情节的，依照本法第一百四十一条的规定处罚。', '中华人民共和国刑法第一百四十四条')}
+search was found
+{('在生产、销售的食品中掺入有毒、有害的非食品原料的，或者销售明知掺有有毒、有害的非食品原料的食品的，处五年以下有期徒刑，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处五年以上十年以下有期徒刑，并处罚金；致人死亡或者有其他特别严重情节的，依照本法第一百四十一条的规定处罚。', '中华人民共和国刑法第一百四十四条')}
+[ram after gather] free=1476G shmem=22G
+Packed 24 trajectories into 24 sequences of length 6144
+Iterating dataset:   0%|▏                                                                                                                                                                                                   | 4/3320 [18:47<334:41:29, 363.36s/batch]/workspace/myenv/lib/python3.12/site-packages/cn2an/transform.py:139: UserWarning: 不符合格式的数据：万
+[ram after train    ] free=1479G shmem=22G
+
+--- Step 4 | Epoch 0 | Cases [124, 971, 550] ---
+  warn(str(e))                                                                                                                                                                                                                                | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+{('以营利为目的，聚众赌博或者以赌博为业的，处三年以下有期徒刑、拘役或者管制，并处罚金。开设赌场的，处五年以下有期徒刑、拘役或者管制，并处罚金；情节严重的，处五年以上十年以下有期徒刑，并处罚金。组织中华人民共和国公民参与国（境）外赌博，数额巨大或者有其他严重情节的，依照前款的规定处罚。', '中华人民共和国刑法第三百零三条')}
+{('以营利为目的，聚众赌博或者以赌博为业的，处三年以下有期徒刑、拘役或者管制，并处罚金。开设赌场的，处五年以下有期徒刑、拘役或者管制，并处罚金；情节严重的，处五年以上十年以下有期徒刑，并处罚金。组织中华人民共和国公民参与国（境）外赌博，数额巨大或者有其他严重情节的，依照前款的规定处罚。', '中华人民共和国刑法第三百零三条')}
+{('以营利为目的，聚众赌博或者以赌博为业的，处三年以下有期徒刑、拘役或者管制，并处罚金。开设赌场的，处五年以下有期徒刑、拘役或者管制，并处罚金；情节严重的，处五年以上十年以下有期徒刑，并处罚金。组织中华人民共和国公民参与国（境）外赌博，数额巨大或者有其他严重情节的，依照前款的规定处罚。', '中华人民共和国刑法第三百零三条')}
+{('以营利为目的，聚众赌博或者以赌博为业的，处三年以下有期徒刑、拘役或者管制，并处罚金。开设赌场的，处五年以下有期徒刑、拘役或者管制，并处罚金；情节严重的，处五年以上十年以下有期徒刑，并处罚金。组织中华人民共和国公民参与国（境）外赌博，数额巨大或者有其他严重情节的，依照前款的规定处罚。', '中华人民共和国刑法第三百零三条')}
+{('以营利为目的，聚众赌博或者以赌博为业的，处三年以下有期徒刑、拘役或者管制，并处罚金。开设赌场的，处五年以下有期徒刑、拘役或者管制，并处罚金；情节严重的，处五年以上十年以下有期徒刑，并处罚金。组织中华人民共和国公民参与国（境）外赌博，数额巨大或者有其他严重情节的，依照前款的规定处罚。', '中华人民共和国刑法第三百零三条')}
+{('以营利为目的，聚众赌博或者以赌博为业的，处三年以下有期徒刑、拘役或者管制，并处罚金。开设赌场的，处五年以下有期徒刑、拘役或者管制，并处罚金；情节严重的，处五年以上十年以下有期徒刑，并处罚金。组织中华人民共和国公民参与国（境）外赌博，数额巨大或者有其他严重情节的，依照前款的规定处罚。', '中华人民共和国刑法第三百零三条')}
+{('以营利为目的，聚众赌博或者以赌博为业的，处三年以下有期徒刑、拘役或者管制，并处罚金。开设赌场的，处五年以下有期徒刑、拘役或者管制，并处罚金；情节严重的，处五年以上十年以下有期徒刑，并处罚金。组织中华人民共和国公民参与国（境）外赌博，数额巨大或者有其他严重情节的，依照前款的规定处罚。', '中华人民共和国刑法第三百零三条')}
+{('以营利为目的，聚众赌博或者以赌博为业的，处三年以下有期徒刑、拘役或者管制，并处罚金。开设赌场的，处五年以下有期徒刑、拘役或者管制，并处罚金；情节严重的，处五年以上十年以下有期徒刑，并处罚金。组织中华人民共和国公民参与国（境）外赌博，数额巨大或者有其他严重情节的，依照前款的规定处罚。', '中华人民共和国刑法第三百零三条')}
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+CHECKING LAW:
+gather: 100%|█| 24/24 [03:35<00:00,  8.98s/it, reward=0, turn_reward_0=0.167, turn_reward_1=0.135, turn_reward_2=0.0312, turn_reward_3=0.0521, turn_reward_4=0.0625, turn_reward_5=0.0208, turn_reward_6=0.0104, turn_reward_7=0.0208, milestones_achieved=2, milesto
+train: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [00:50<00:00,  2.10s/it, loss/train=-0.287, loss/grad_norm=6.31, loss/learning_rate=5e-6, loss/entropy=0.264]
+[ram after gather] free=1475G shmem=22G
+Packed 24 trajectories into 24 sequences of length 6144
+gather: 100%|█| 24/24 [03:16<00:00,  8.17s/it, reward=0, turn_reward_0=0.264, turn_reward_1=0.132, turn_reward_2=0.0243, turn_reward_3=0, turn_reward_4=0.0139, turn_reward_5=0, turn_reward_6=0.0104, turn_reward_7=0, milestones_achieved=1.58, milestone_frac=0.62
+[ram after train    ] free=1479G shmem=22G
+
+--- Step 5 | Epoch 0 | Cases [1823, 992, 1545] ---
+train: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [01:08<00:00,  2.87s/it, loss/train=0.164, loss/grad_norm=0.155, loss/learning_rate=5e-6, loss/entropy=0.215]
+search was found
+{('容留他人吸食、注射毒品的，处三年以下有期徒刑、拘役或者管制，并处罚金。', '中华人民共和国刑法第三百五十四条')}
+CHECKING LAW:
+search was found
+{('容留他人吸食、注射毒品的，处三年以下有期徒刑、拘役或者管制，并处罚金。', '中华人民共和国刑法第三百五十四条')}
+CHECKING LAW:
+search was found
+{('容留他人吸食、注射毒品的，处三年以下有期徒刑、拘役或者管制，并处罚金。', '中华人民共和国刑法第三百五十四条')}
+CHECKING LAW:
+search was found
+{('容留他人吸食、注射毒品的，处三年以下有期徒刑、拘役或者管制，并处罚金。', '中华人民共和国刑法第三百五十四条')}
+CHECKING LAW:
+search was found
+{('容留他人吸食、注射毒品的，处三年以下有期徒刑、拘役或者管制，并处罚金。', '中华人民共和国刑法第三百五十四条')}
+CHECKING LAW:
+[ram after gather] free=1473G shmem=22G
+Packed 24 trajectories into 24 sequences of length 8192
+Iterating dataset:   0%|▎                                                                                                                                                                                                   | 6/3320 [27:39<279:36:51, 303.75s/batch]
+[ram after train    ] free=1474G shmem=22G
+
+--- Step 6 | Epoch 0 | Cases [794, 147, 312] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+{('在道路上驾驶机动车，有下列情形之一的，处拘役，并处罚金：（一）追逐竞驶，情节恶劣的；（二）醉酒驾驶机动车的；（三）从事校车业务或者旅客运输，严重超过额定乘员载客，或者严重超过规定时速行驶的；（四）违反危险化学品安全管理规定运输危险化学品，危及公共安全的。机动车所有人、管理人对前款第三项、第四项行为负有直接责任的，依照前款的规定处罚。有前两款行为，同时构成其他犯罪的，依照处罚较重的规定定罪处罚。', '中华人民共和国刑法第一百三十三条之一')}
+{('在道路上驾驶机动车，有下列情形之一的，处拘役，并处罚金：（一）追逐竞驶，情节恶劣的；（二）醉酒驾驶机动车的；（三）从事校车业务或者旅客运输，严重超过额定乘员载客，或者严重超过规定时速行驶的；（四）违反危险化学品安全管理规定运输危险化学品，危及公共安全的。机动车所有人、管理人对前款第三项、第四项行为负有直接责任的，依照前款的规定处罚。有前两款行为，同时构成其他犯罪的，依照处罚较重的规定定罪处罚。', '中华人民共和国刑法第一百三十三条之一')}
+{('在道路上驾驶机动车，有下列情形之一的，处拘役，并处罚金：（一）追逐竞驶，情节恶劣的；（二）醉酒驾驶机动车的；（三）从事校车业务或者旅客运输，严重超过额定乘员载客，或者严重超过规定时速行驶的；（四）违反危险化学品安全管理规定运输危险化学品，危及公共安全的。机动车所有人、管理人对前款第三项、第四项行为负有直接责任的，依照前款的规定处罚。有前两款行为，同时构成其他犯罪的，依照处罚较重的规定定罪处罚。', '中华人民共和国刑法第一百三十三条之一')}
+{('在道路上驾驶机动车，有下列情形之一的，处拘役，并处罚金：（一）追逐竞驶，情节恶劣的；（二）醉酒驾驶机动车的；（三）从事校车业务或者旅客运输，严重超过额定乘员载客，或者严重超过规定时速行驶的；（四）违反危险化学品安全管理规定运输危险化学品，危及公共安全的。机动车所有人、管理人对前款第三项、第四项行为负有直接责任的，依照前款的规定处罚。有前两款行为，同时构成其他犯罪的，依照处罚较重的规定定罪处罚。', '中华人民共和国刑法第一百三十三条之一')}
+{('在道路上驾驶机动车，有下列情形之一的，处拘役，并处罚金：（一）追逐竞驶，情节恶劣的；（二）醉酒驾驶机动车的；（三）从事校车业务或者旅客运输，严重超过额定乘员载客，或者严重超过规定时速行驶的；（四）违反危险化学品安全管理规定运输危险化学品，危及公共安全的。机动车所有人、管理人对前款第三项、第四项行为负有直接责任的，依照前款的规定处罚。有前两款行为，同时构成其他犯罪的，依照处罚较重的规定定罪处罚。', '中华人民共和国刑法第一百三十三条之一')}
+{('在道路上驾驶机动车，有下列情形之一的，处拘役，并处罚金：（一）追逐竞驶，情节恶劣的；（二）醉酒驾驶机动车的；（三）从事校车业务或者旅客运输，严重超过额定乘员载客，或者严重超过规定时速行驶的；（四）违反危险化学品安全管理规定运输危险化学品，危及公共安全的。机动车所有人、管理人对前款第三项、第四项行为负有直接责任的，依照前款的规定处罚。有前两款行为，同时构成其他犯罪的，依照处罚较重的规定定罪处罚。', '中华人民共和国刑法第一百三十三条之一')}
+{('在道路上驾驶机动车，有下列情形之一的，处拘役，并处罚金：（一）追逐竞驶，情节恶劣的；（二）醉酒驾驶机动车的；（三）从事校车业务或者旅客运输，严重超过额定乘员载客，或者严重超过规定时速行驶的；（四）违反危险化学品安全管理规定运输危险化学品，危及公共安全的。机动车所有人、管理人对前款第三项、第四项行为负有直接责任的，依照前款的规定处罚。有前两款行为，同时构成其他犯罪的，依照处罚较重的规定定罪处罚。', '中华人民共和国刑法第一百三十三条之一')}
+{('在道路上驾驶机动车，有下列情形之一的，处拘役，并处罚金：（一）追逐竞驶，情节恶劣的；（二）醉酒驾驶机动车的；（三）从事校车业务或者旅客运输，严重超过额定乘员载客，或者严重超过规定时速行驶的；（四）违反危险化学品安全管理规定运输危险化学品，危及公共安全的。机动车所有人、管理人对前款第三项、第四项行为负有直接责任的，依照前款的规定处罚。有前两款行为，同时构成其他犯罪的，依照处罚较重的规定定罪处罚。', '中华人民共和国刑法第一百三十三条之一')}
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+{('非法采集、供应血液或者制作、供应血液制品，不符合国家规定的标准，足以危害人体健康的，处五年以下有期徒刑或者拘役，并处罚金；对人体健康造成严重危害的，处五年以上十年以下有期徒刑，并处罚金；造成特别严重后果的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。经国家主管部门批准采集、供应血液或者制作、供应血液制品的部门，不依照规定进行检测或者违背其他操作规定，造成危害他人身体健康后果的，对单位判处罚金，并对其直接负责的主管人员和其他直接责任人员，处五年以下有期徒刑或者拘役。', '中华人民共和国刑法第三百三十四条')}
+CHECKING LAW:
+LAW FOUND
+search was found
+{('在道路上驾驶机动车，有下列情形之一的，处拘役，并处罚金：（一）追逐竞驶，情节恶劣的；（二）醉酒驾驶机动车的；（三）从事校车业务或者旅客运输，严重超过额定乘员载客，或者严重超过规定时速行驶的；（四）违反危险化学品安全管理规定运输危险化学品，危及公共安全的。机动车所有人、管理人对前款第三项、第四项行为负有直接责任的，依照前款的规定处罚。有前两款行为，同时构成其他犯罪的，依照处罚较重的规定定罪处罚。', '中华人民共和国刑法第一百三十三条之一')}
+search was found
+{('对于犯罪分子决定刑罚的时候，应当根据犯罪的事实、犯罪的性质、情节和对于社会的危害程度，依照本法的有关规定判处。', '中华人民共和国刑法第六十一条')}
+[ram after gather] free=1472G shmem=22G
+Packed 24 trajectories into 24 sequences of length 6144
+Iterating dataset:   0%|▍                                                                                                                                                                                                   | 7/3320 [32:54<282:53:38, 307.40s/batch]
+[ram after train    ] free=1473G shmem=22G
+
+--- Step 7 | Epoch 0 | Cases [279, 797, 1653] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+search was found
+{('判处罚金，应当根据犯罪情节决定罚金数额。', '中华人民共和国刑法第五十二条')}
+search was found
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+[milestone-judge] failed after 5 attempts: empty choices: None
+search was found
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+search was found
+{('盗窃公私财物，数额较大的，或者多次盗窃、入户盗窃、携带凶器盗窃、扒窃的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额巨大或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；数额特别巨大或者有其他特别严重情节的，处十年以上有期徒刑或者无期徒刑，并处罚金或者没收财产。', '中华人民共和国刑法第二百六十四条')}
+[ram after gather] free=1486G shmem=22G
+Packed 24 trajectories into 24 sequences of length 6144
+Iterating dataset:   0%|▍                                                                                                                                                                                                   | 8/3320 [38:17<287:31:05, 312.52s/batch]
+[ram after train    ] free=1486G shmem=22G
+
+--- Step 8 | Epoch 0 | Cases [944, 260, 1848] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+{('故意伤害他人身体的，处三年以下有期徒刑、拘役或者管制。犯前款罪，致人重伤的，处三年以上十年以下有期徒刑；致人死亡或者以特别残忍手段致人重伤造成严重残疾的，处十年以上有期徒刑、无期徒刑或者死刑。本法另有规定的，依照规定。', '中华人民共和国刑法第二百三十四条')}
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+{('故意伤害他人身体的，处三年以下有期徒刑、拘役或者管制。犯前款罪，致人重伤的，处三年以上十年以下有期徒刑；致人死亡或者以特别残忍手段致人重伤造成严重残疾的，处十年以上有期徒刑、无期徒刑或者死刑。本法另有规定的，依照规定。', '中华人民共和国刑法第二百三十四条')}
+{('故意伤害他人身体的，处三年以下有期徒刑、拘役或者管制。犯前款罪，致人重伤的，处三年以上十年以下有期徒刑；致人死亡或者以特别残忍手段致人重伤造成严重残疾的，处十年以上有期徒刑、无期徒刑或者死刑。本法另有规定的，依照规定。', '中华人民共和国刑法第二百三十四条')}
+{('故意伤害他人身体的，处三年以下有期徒刑、拘役或者管制。犯前款罪，致人重伤的，处三年以上十年以下有期徒刑；致人死亡或者以特别残忍手段致人重伤造成严重残疾的，处十年以上有期徒刑、无期徒刑或者死刑。本法另有规定的，依照规定。', '中华人民共和国刑法第二百三十四条')}
+{('故意伤害他人身体的，处三年以下有期徒刑、拘役或者管制。犯前款罪，致人重伤的，处三年以上十年以下有期徒刑；致人死亡或者以特别残忍手段致人重伤造成严重残疾的，处十年以上有期徒刑、无期徒刑或者死刑。本法另有规定的，依照规定。', '中华人民共和国刑法第二百三十四条')}
+{('故意伤害他人身体的，处三年以下有期徒刑、拘役或者管制。犯前款罪，致人重伤的，处三年以上十年以下有期徒刑；致人死亡或者以特别残忍手段致人重伤造成严重残疾的，处十年以上有期徒刑、无期徒刑或者死刑。本法另有规定的，依照规定。', '中华人民共和国刑法第二百三十四条')}
+{('故意伤害他人身体的，处三年以下有期徒刑、拘役或者管制。犯前款罪，致人重伤的，处三年以上十年以下有期徒刑；致人死亡或者以特别残忍手段致人重伤造成严重残疾的，处十年以上有期徒刑、无期徒刑或者死刑。本法另有规定的，依照规定。', '中华人民共和国刑法第二百三十四条')}
+{('故意伤害他人身体的，处三年以下有期徒刑、拘役或者管制。犯前款罪，致人重伤的，处三年以上十年以下有期徒刑；致人死亡或者以特别残忍手段致人重伤造成严重残疾的，处十年以上有期徒刑、无期徒刑或者死刑。本法另有规定的，依照规定。', '中华人民共和国刑法第二百三十四条')}
+{('故意伤害他人身体的，处三年以下有期徒刑、拘役或者管制。犯前款罪，致人重伤的，处三年以上十年以下有期徒刑；致人死亡或者以特别残忍手段致人重伤造成严重残疾的，处十年以上有期徒刑、无期徒刑或者死刑。本法另有规定的，依照规定。', '中华人民共和国刑法第二百三十四条')}
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+search was found
+{('过失致人死亡的，处三年以上七年以下有期徒刑；情节较轻的，处三年以下有期徒刑。本法另有规定的，依照规定。', '中华人民共和国刑法第二百三十三条')}
+CHECKING LAW:
+LAW FOUND
+search was found
+{('过失致人死亡的，处三年以上七年以下有期徒刑；情节较轻的，处三年以下有期徒刑。本法另有规定的，依照规定。', '中华人民共和国刑法第二百三十三条')}
+gather: 100%|█| 24/24 [04:37<00:00, 11.56s/it, reward=0, turn_reward_0=0.344, turn_reward_1=0.135, turn_reward_2=0.0625, milestones_achieved=2.12, milestone_frac=0.708, law_found=0.417, milestone_rejections=0.5, milestone_judge_failures=0, searches=3.92, turn_r
+train: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 23/23 [00:48<00:00,  2.11s/it, loss/train=-0.0442, loss/grad_norm=0.056, loss/learning_rate=5e-6, loss/entropy=0.0951]
+Attempt bricked because of Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'StreamLake', 'is_byok': False, 'limit_source': 'upstream_provider_shared_pool', 'remedy_hint': 'Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another provider with provider routing: https://openrouter.ai/docs/features/provider-routing', 'previous_errors': [{'code': 429, 'message': 'Provider returned error', 'provider_name': 'DeepInfra', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}, {'code': 429, 'message': 'Provider returned error', 'provider_name': 'Novita', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}]}}, 'user_id': 'user_2so3sKfh5GzJxbsweyZWg0XTLVz'}, retrying in 1s, 1/5
+Attempt bricked because of Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'Novita', 'is_byok': False, 'limit_source': 'upstream_provider_shared_pool', 'remedy_hint': 'Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another provider with provider routing: https://openrouter.ai/docs/features/provider-routing', 'previous_errors': [{'code': 429, 'message': 'Provider returned error', 'provider_name': 'StreamLake', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}, {'code': 429, 'message': 'Provider returned error', 'provider_name': 'DeepInfra', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}]}}, 'user_id': 'user_2so3sKfh5GzJxbsweyZWg0XTLVz'}, retrying in 1s, 1/5
+Attempt bricked because of Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'StreamLake', 'is_byok': False, 'limit_source': 'upstream_provider_shared_pool', 'remedy_hint': 'Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another provider with provider routing: https://openrouter.ai/docs/features/provider-routing', 'previous_errors': [{'code': 429, 'message': 'Provider returned error', 'provider_name': 'DeepInfra', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}, {'code': 429, 'message': 'Provider returned error', 'provider_name': 'Novita', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}]}}, 'user_id': 'user_2so3sKfh5GzJxbsweyZWg0XTLVz'}, retrying in 1s, 1/5
+search was found
+{('明知自己的行为会发生危害社会的结果，并且希望或者放任这种结果发生，因而构成犯罪的，是故意犯罪。故意犯罪，应当负刑事责任。', '中华人民共和国刑法第十四条')}
+Attempt bricked because of Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'StreamLake', 'is_byok': False, 'limit_source': 'upstream_provider_shared_pool', 'remedy_hint': 'Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another provider with provider routing: https://openrouter.ai/docs/features/provider-routing', 'previous_errors': [{'code': 429, 'message': 'Provider returned error', 'provider_name': 'Novita', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}, {'code': 429, 'message': 'Provider returned error', 'provider_name': 'DeepInfra', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}]}}, 'user_id': 'user_2so3sKfh5GzJxbsweyZWg0XTLVz'}, retrying in 1s, 1/5
+Attempt bricked because of Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'StreamLake', 'is_byok': False, 'limit_source': 'upstream_provider_shared_pool', 'remedy_hint': 'Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another provider with provider routing: https://openrouter.ai/docs/features/provider-routing', 'previous_errors': [{'code': 429, 'message': 'Provider returned error', 'provider_name': 'Novita', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}, {'code': 429, 'message': 'Provider returned error', 'provider_name': 'DeepInfra', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}]}}, 'user_id': 'user_2so3sKfh5GzJxbsweyZWg0XTLVz'}, retrying in 1s, 1/5
+Attempt bricked because of Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'StreamLake', 'is_byok': False, 'limit_source': 'upstream_provider_shared_pool', 'remedy_hint': 'Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another provider with provider routing: https://openrouter.ai/docs/features/provider-routing', 'previous_errors': [{'code': 429, 'message': 'Provider returned error', 'provider_name': 'DeepInfra', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}, {'code': 429, 'message': 'Provider returned error', 'provider_name': 'Novita', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}]}}, 'user_id': 'user_2so3sKfh5GzJxbsweyZWg0XTLVz'}, retrying in 1s, 1/5
+[ram after gather] free=1484G shmem=22G
+Packed 24 trajectories into 23 sequences of length 6144
+Iterating dataset:   0%|▌                                                                                                                                                                                                   | 9/3320 [43:44<291:34:31, 317.03s/batch]
+[ram after train    ] free=1484G shmem=22G
+
+--- Step 9 | Epoch 0 | Cases [1939, 1559, 1737] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+[milestone-judge] failed after 5 attempts: empty choices: None
+search was found
+{('违反药品管理法规，有下列情形之一，足以严重危害人体健康的，处三年以下有期徒刑或者拘役，并处或者单处罚金；对人体健康造成严重危害或者有其他严重情节的，处三年以上七年以下有期徒刑，并处罚金：（一）生产、销售国务院药品监督管理部门禁止使用的药品的；（二）未取得药品相关批准证明文件生产、进口药品或者明知是上述药品而销售的；（三）药品申请注册中提供虚假的证明、数据、资料、样品或者采取其他欺骗手段的；（四）编造生产、检验记录的。有前款行为，同时又构成本法第一百四十一条、第一百四十二条规定之罪或者其他犯罪的，依照处罚较重的规定定罪处罚。', '中华人民共和国刑法第一百四十二条之一')}
+search was found
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+search was found
+{('对于被判处拘役、三年以下有期徒刑的犯罪分子，同时符合下列条件的，可以宣告缓刑，对其中不满十八周岁的人、怀孕的妇女和已满七十五周岁的人，应当宣告缓刑：（一）犯罪情节较轻；（二）有悔罪表现；（三）没有再犯罪的危险；（四）宣告缓刑对所居住社区没有重大不良影响。宣告缓刑，可以根据犯罪情况，同时禁止犯罪分子在缓刑考验期限内从事特定活动，进入特定区域、场所，接触特定的人。被宣告缓刑的犯罪分子，如果被判处附加刑，附加刑仍须执行。', '中华人民共和国刑法第七十二条')}
+CHECKING LAW:
+LAW FOUND
+search was found
+{('生产、销售假药的，处三年以下有期徒刑或者拘役，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；致人死亡或者有其他特别严重情节的，处十年以上有期徒刑、无期徒刑或者死刑，并处罚金或者没收财产。药品使用单位的人员明知是假药而提供给他人使用的，依照前款的规定处罚。', '中华人民共和国刑法第一百四十一条')}
+CHECKING LAW:
+search was found
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+[milestone-judge] failed after 5 attempts: empty choices: None
+search was found
+{('违反药品管理法规，有下列情形之一，足以严重危害人体健康的，处三年以下有期徒刑或者拘役，并处或者单处罚金；对人体健康造成严重危害或者有其他严重情节的，处三年以上七年以下有期徒刑，并处罚金：（一）生产、销售国务院药品监督管理部门禁止使用的药品的；（二）未取得药品相关批准证明文件生产、进口药品或者明知是上述药品而销售的；（三）药品申请注册中提供虚假的证明、数据、资料、样品或者采取其他欺骗手段的；（四）编造生产、检验记录的。有前款行为，同时又构成本法第一百四十一条、第一百四十二条规定之罪或者其他犯罪的，依照处罚较重的规定定罪处罚。', '中华人民共和国刑法第一百四十二条之一')}
+search was found
+search was found
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+{('生产、销售假药的，处三年以下有期徒刑或者拘役，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；致人死亡或者有其他特别严重情节的，处十年以上有期徒刑、无期徒刑或者死刑，并处罚金或者没收财产。药品使用单位的人员明知是假药而提供给他人使用的，依照前款的规定处罚。', '中华人民共和国刑法第一百四十一条')}
+CHECKING LAW:
+search was found
+{('本章上述危害国家安全罪行中，除第一百零三条第二款、第一百零五条、第一百零七条、第一百零九条外，对国家和人民危害特别严重、情节特别恶劣的，可以判处死刑。犯本章之罪的，可以并处没收财产。', '中华人民共和国刑法第一百一十三条')}
+  File "/workspace/GRPO-SingleLawyer/ART_train.py", line 214, in <module>
+    asyncio.run(train())
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 30, in run
+    return loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 92, in run_until_complete
+    self._run_once()
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 115, in _run_once
+    event_list = self._selector.select(timeout)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/selectors.py", line 468, in select
+    fd_event_list = self._selector.poll(timeout, max_ev)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

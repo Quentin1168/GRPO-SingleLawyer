@@ -1,0 +1,76 @@
+[34m[1mwandb[0m: Detected [huggingface_hub.inference, litellm, openai] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Weave is installed but not imported. Add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai/
+gather: 100%|█| 24/24 [03:48<00:00,  9.51s/it, reward=0, turn_reward_0=0.24, turn_reward_1=0.0938, turn_reward_2=0.0521, turn_reward_3=0.0312, turn_reward_4=0.0208, turn_reward_5=0.0104, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.79, milestone_frac
+
+--- Step 0 | Epoch 0 | Cases [284, 1146, 115] ---
+/workspace/GRPO-SingleLawyer/ART_train.py:198: DeprecationWarning: model.train() is deprecated. Use backend.train(model, ...) instead.=0.0312, turn_reward_4=0.0208, turn_reward_5=0.0104, turn_reward_6=0, turn_reward_7=0, milestones_achieved=1.79, milestone_frac
+Attempt bricked because of Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'StreamLake', 'is_byok': False, 'limit_source': 'upstream_provider_shared_pool', 'remedy_hint': 'Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another provider with provider routing: https://openrouter.ai/docs/features/provider-routing', 'previous_errors': [{'code': 429, 'message': 'Provider returned error', 'provider_name': 'DeepInfra', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}, {'code': 429, 'message': 'Provider returned error', 'provider_name': 'Novita', 'raw': 'deepseek/deepseek-chat is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}]}}, 'user_id': 'user_2so3sKfh5GzJxbsweyZWg0XTLVz'}, retrying in 1s, 1/5
+[ram after gather] free=1494G shmem=7G
+
+Migration guide:
+  # Before (deprecated):
+  await model.train(trajectory_groups, config=TrainConfig(learning_rate=5e-6))
+
+  # After (recommended):
+  result = await backend.train(model, trajectory_groups, learning_rate=5e-6)
+  await model.log(trajectory_groups, metrics=result.metrics, step=result.step, split='train')
+
+Key differences:
+  - backend.train() does NOT automatically log trajectories or metrics
+  - backend.train() returns a TrainResult with step, metrics, and checkpoint info
+  - Each backend has its own type-checked parameters (no more generic config objects)
+  await model.train(trajectory_groups,
+Packed 24 trajectories into 24 sequences of length 6144
+train: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 24/24 [01:03<00:00,  2.65s/it, loss/train=-0.0787, loss/grad_norm=0.0799, loss/learning_rate=5e-6, loss/entropy=0.188]
+Iterating dataset:   0%|                                                                                                                                                                                                    | 1/3320 [05:07<283:30:42, 307.52s/batch]
+[ram after train    ] free=1483G shmem=20G
+
+--- Step 1 | Epoch 0 | Cases [1277, 617, 214] ---
+gather:   0%|                                                                                                                                                                                                                                 | 0/24 [00:00<?, ?it/s]
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+search was found
+{'t'}
+{'t'}
+{'t'}
+{'t'}
+{'t'}
+{'t'}
+{'t'}
+{'t'}
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+CHECKING LAW:
+LAW FOUND
+  File "/workspace/GRPO-SingleLawyer/ART_train.py", line 214, in <module>
+    asyncio.run(train())
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 30, in run
+    return loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 92, in run_until_complete
+    self._run_once()
+  File "/workspace/myenv/lib/python3.12/site-packages/nest_asyncio.py", line 115, in _run_once
+    event_list = self._selector.select(timeout)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/selectors.py", line 468, in select
+    fd_event_list = self._selector.poll(timeout, max_ev)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
