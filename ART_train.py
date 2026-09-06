@@ -196,7 +196,7 @@ async def train():
             )
             case_by_id[helper.id] = case
             groups.append(art.TrajectoryGroup(
-                (helper.trajectory_rollout() for _ in range(helper.size)),
+                (helper.trajectory_rollout() for _ in range(GROUP_SIZE)),
                 metadata={"case_id": helper.id},
             ))
         # gather all the trajectories from the cases of the batch
