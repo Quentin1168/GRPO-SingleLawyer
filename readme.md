@@ -76,7 +76,7 @@ WANDB_PROJECT="GRPOSingleLawyerTest"
 
 ---
 
-## ⚙️ Disk Space & Hugging Face Cache Setup
+## Disk Space & Hugging Face Cache Setup
 
 <details>
 <summary><b>Click to expand cache redirection tips (recommended for cloud instances / RunPod)</b></summary>
@@ -154,7 +154,7 @@ python3 evaluate.py
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```text
 GRPO-SingleLawyer/
