@@ -1,101 +1,177 @@
-import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
-# 1. Load the text file (space/whitespace delimited)
-file_path = "log.txt"  # Replace with your actual file path
+import pandas as pd
+import wandb
+
+# ==========================================
+# 1. Guideline-Compliant Typography & Settings
+# ==========================================
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.size": 8,  # Base font size (> 6pt)
+    "axes.labelsize": 8.5,  # Axis label font size (> 6pt)
+    "xtick.labelsize": 7.5,
+    "ytick.labelsize": 7.5,
+    "figure.dpi": 300,
+    "savefig.dpi": 1200,  # 1200 DPI requirement
+    "lines.linewidth": 1.2,
+    "pdf.fonttype": 42,  # Embed fonts as TrueType
+    "ps.fonttype": 42,
+})
+
+# ==========================================
+# 2. Smoothing Helper Function (EMA)
+# ==========================================
+# SMOOTHING_WEIGHT: 0.0 (no smoothing) to 0.99 (very smooth). 0.85 is standard for RL.
+SMOOTHING_WEIGHT = 0.85
 
 
+def smooth_curve(series: pd.Series, weight: float = 0.85) -> pd.Series:
+  """Exponential moving average (EMA) smoothing matching W&B dashboard smoothing."""
+  return series.ewm(alpha=(1.0 - weight), adjust=False).mean()
 
-# Read data, treating any sequence of whitespace as column separators
-df = pd.read_csv(file_path, sep=r"\s+")
 
-# Ensure column names are clean of extraneous spaces
-df.columns = df.columns.str.strip()
+# ==========================================
+# 3. Authenticate & Connect
+# ==========================================
+api = wandb.Api()
+run = api.run("quentinchang1168-uq/GRPO-SingleLawyer/grpo-lawyer-56")
 
-# If your 'Grad_Norm' column header was truncated as 'Grad_No', rename it:
-df = df.rename(columns={df.columns[-1]: "Grad_Norm"})
+metrics_to_plot = [
+    ("custom/reward_mean", "Mean Total Reward"),
+    ("train/milestone_frac", "Mean Milestone Reward"),
+    ("train/judge_reward", "Mean Judge Reward"),
+]
 
-# 2. Group by 'Global_Step' and average the 3 records per step
-df_avg = df.groupby("Global_Step", as_index=False).mean()
+# Build step lookup table
+print("Fetching training step mapping...")
+step_records = list(run.scan_history(keys=["_step", "training_step"]))
+step_df = (
+    pd.DataFrame(step_records)
+    .dropna(subset=["training_step"])
+    .sort_values("_step")
+)
 
-def clean_rl_spikes(series, high_quantile=0.92, window_size=15):
-    """Aggressively removes RL spikes using two steps:
+has_training_step = not step_df.empty
+x_col = "training_step" if has_training_step else "_step"
+x_label = "Training Steps Elapsed" if has_training_step else "Steps Elapsed"
 
-    1. Removes extreme values strictly above a high percentile (e.g. 92nd).
-    2. Applies a rolling median filter to erase multi-step residual spikes.
-    """
-    cleaned = series.copy()
+# ==========================================
+# 4. Fetch & Smooth Each Metric
+# ==========================================
+processed_data = []
 
-    # Step 1: Replace values exceeding the upper percentile threshold with NaN
-    upper_threshold = cleaned.quantile(high_quantile)
-    cleaned[cleaned > upper_threshold] = np.nan
+for raw_key, display_name in metrics_to_plot:
+  print(f"Fetching '{raw_key}'...")
+  records = list(run.scan_history(keys=["_step", raw_key]))
+  df_metric = (
+      pd.DataFrame(records).dropna(subset=[raw_key]).sort_values("_step")
+  )
 
-    # Step 2: Fill NaNs via linear interpolation so line stays connected
-    cleaned = cleaned.interpolate(method="linear").bfill().ffill()
+  if df_metric.empty:
+    print(f"Warning: No valid rows found for {raw_key}")
+    continue
 
-    # Step 3: Rolling Median to smooth out remaining multi-step mini-spikes
-    cleaned_smooth = (
-        cleaned.rolling(window=window_size, center=True, min_periods=1)
-        .median()
-        .ewm(span=3)
-        .mean()
+  if has_training_step:
+    df_metric = pd.merge_asof(
+        df_metric, step_df, on="_step", direction="backward"
+    )
+    df_metric = df_metric.dropna(subset=["training_step"])
+
+  # Calculate smoothed metric
+  df_metric["smoothed"] = smooth_curve(
+      df_metric[raw_key], weight=SMOOTHING_WEIGHT
+  )
+  processed_data.append((raw_key, display_name, df_metric))
+
+# ==========================================
+# 5. Save Individual Figures
+# ==========================================
+print("\nSaving individual figures...")
+for raw_key, display_name, df_metric in processed_data:
+  fig, ax = plt.subplots(figsize=(3.2, 2.3))
+
+  # 1. Faint raw line in background (halftone friendly)
+  ax.plot(
+      df_metric[x_col],
+      df_metric[raw_key],
+      color="#000000",
+      alpha=0.18,
+      linewidth=0.75,
+      label="Raw",
+  )
+
+  # 2. Solid bold smoothed line
+  ax.plot(
+      df_metric[x_col],
+      df_metric["smoothed"],
+      color="#000000",
+      linewidth=1.3,
+      linestyle="-",
+      label="Smoothed",
+  )
+
+  ax.set_xlabel(x_label)
+  ax.set_ylabel(display_name)
+  ax.grid(True, linestyle=":", linewidth=0.5, color="#888888", alpha=0.7)
+  ax.set_axisbelow(True)
+  ax.locator_params(axis="x", nbins=4)
+  ax.locator_params(axis="y", nbins=5)
+
+  plt.tight_layout()
+
+  clean_filename = raw_key.replace("/", "_")
+  fig.savefig(f"{clean_filename}.pdf", format="pdf", bbox_inches="tight")
+  fig.savefig(f"{clean_filename}.eps", format="eps", bbox_inches="tight")
+  fig.savefig(
+      f"{clean_filename}.png",
+      format="png",
+      dpi=1200,
+      bbox_inches="tight",
+  )
+  plt.close(fig)
+  print(f"  [✓] Saved {clean_filename} (.pdf, .eps, .png @ 1200 DPI)")
+
+# ==========================================
+# 6. Save Combined 1x3 Row Figure
+# ==========================================
+if processed_data:
+  print("\nSaving combined 1x3 row figure...")
+  num_plots = len(processed_data)
+  fig, axes = plt.subplots(1, num_plots, figsize=(6.8, 2.2))
+
+  if num_plots == 1:
+    axes = [axes]
+
+  for ax, (raw_key, display_name, df_metric) in zip(axes, processed_data):
+    # Faint raw line
+    ax.plot(
+        df_metric[x_col],
+        df_metric[raw_key],
+        color="#000000",
+        alpha=0.18,
+        linewidth=0.75,
     )
 
-    return cleaned_smooth
+    # Bold smoothed line
+    ax.plot(
+        df_metric[x_col],
+        df_metric["smoothed"],
+        color="#000000",
+        linewidth=1.3,
+        linestyle="-",
+    )
 
-df_avg["Loss_Clean"] = clean_rl_spikes(df_avg["Loss"])
-df_avg["Reward_Clean"] = clean_rl_spikes(df_avg["Mean_Reward"])
-df_avg["Grad_Norm_Clean"] = clean_rl_spikes(df_avg["Grad_Norm"])
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(display_name)
+    ax.grid(True, linestyle=":", linewidth=0.5, color="#888888", alpha=0.7)
+    ax.set_axisbelow(True)
+    ax.locator_params(axis="x", nbins=4)
+    ax.locator_params(axis="y", nbins=5)
 
-SMOOTHING_SPAN = 5
-
-
-
-# 3. Create 3 Subplots in One Figure
-fig, axes = plt.subplots(3, 1, figsize=(10, 12), sharex=True)
-
-
-
-# Plot 1: Loss
-axes[0].plot(
-    df_avg["Global_Step"],
-    df_avg["Loss_Clean"],
-    color="#d62728",
-    linewidth=1.8,
-    marker="o",
-    markersize=3,
-)
-axes[0].set_ylabel("Loss")
-axes[0].set_title("Average Loss per Global Step")
-axes[0].grid(True, linestyle="--", alpha=0.5)
-
-# Plot 2: Mean Reward
-axes[1].plot(
-    df_avg["Global_Step"],
-    df_avg["Reward_Clean"],
-    color="#2ca02c",
-    linewidth=1.8,
-    marker="o",
-    markersize=3,
-)
-axes[1].set_ylabel("Mean Reward")
-axes[1].set_title("Average Mean Reward per Global Step")
-axes[1].grid(True, linestyle="--", alpha=0.5)
-
-# Plot 3: Grad Norm
-axes[2].plot(
-    df_avg["Global_Step"],
-    df_avg["Grad_Norm_Clean"],
-    color="#1f77b4",
-    linewidth=1.8,
-    marker="o",
-    markersize=3,
-)
-axes[2].set_xlabel("Global Step")
-axes[2].set_ylabel("Grad Norm")
-axes[2].set_title("Average Grad Norm per Global Step")
-axes[2].grid(True, linestyle="--", alpha=0.5)
-
-plt.tight_layout()
-plt.savefig("metrics_summary.png", dpi=300)
-plt.show()
+  plt.tight_layout()
+  fig.savefig("reward_metrics_1x3.pdf", format="pdf", bbox_inches="tight")
+  fig.savefig(
+      "reward_metrics_1x3.png", format="png", dpi=1200, bbox_inches="tight"
+  )
+  plt.close(fig)
+  print("  [✓] Saved combined figure to reward_metrics_1x3.pdf/.png")

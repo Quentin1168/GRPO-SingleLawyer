@@ -5,9 +5,8 @@ import utils
 import numpy as np
 
 MAX_TURNS = 5
-DISCOUNT = 0.95
-W = {"Q_rebuttal": 0.5, "Q_subsumption": 0.25, "Q_logic": 0.15, "Q_rhetoric": 0.1}
 
+# LLM Judge for determining LLM quality
 JUDGE_PROMPT = """你是一名资深刑事/民事审判法官。本轮评估中，你需要对智能体（RL Agent，如公诉人/诉讼代理人）在【一场完整多轮法庭辩论】中的【每一轮发言（Agent Turn）】进行细粒度的质量评估与定性评分。
 
 【重要原则】：
@@ -53,12 +52,7 @@ JUDGE_PROMPT = """你是一名资深刑事/民事审判法官。本轮评估中�
 - [0.8 - 1.0分]: 语言庄重规范，使用标准司法措辞，举证责任分配表达准确。
 - [0.0 - 0.5分]: 表达过于口语化、情绪化、人身攻击或不符合法庭礼仪。
 
-=========================================
-【违规标记 (Penalty Flags)】
-=========================================
-对智能体的【每一轮发言】分别检查是否存在以下违规，按实际情况标记 true 或 false：
-- stuffing_penalty: 是否仅将法条和事实做无逻辑的列表式堆砌，缺乏辩论结构。
-- hallucination_penalty: 是否歪曲对手原意、捏造案情中不存在的证据/案件事实。
+
 
 =========================================
 【评估步骤与 JSON 输出格式】
@@ -72,7 +66,6 @@ JUDGE_PROMPT = """你是一名资深刑事/民事审判法官。本轮评估中�
 "turn_evaluations": {{
     "Agent Turn 1": {{
     "scores": {{"Q_rebuttal": 0.8, "Q_subsumption": 0.9, "Q_logic": 0.9, "Q_rhetoric": 0.9}},
-    "penalties": {{"stuffing_penalty": false, "hallucination_penalty": false}},
     "tier_reasoning": "..."
     }}
 }}
@@ -80,11 +73,19 @@ JUDGE_PROMPT = """你是一名资深刑事/民事审判法官。本轮评估中�
 
 
 
-def is_trainable(m):
-    return not isinstance(m, dict)
+"""
+flush function to clear the buffer, which is used to convert the dialogue in blocks
 
+parameters:
+agent_turn - current turn of dialogue
+prompt_str - the current dialogue block converted to string
+buffer - the current stored buffer
 
-    
+returns: 
+buffer - a cleared out buffer
+prompt_str - the updated dialogue block converted into a string with the buffer contents
+"""
+
 def flush(agent_turn, prompt_str, buffer):
     if buffer:
         prompt_str.append(f"[Agent Turn {agent_turn}]: " + "\n".join(buffer))
@@ -94,19 +95,31 @@ def flush(agent_turn, prompt_str, buffer):
 
     return buffer, prompt_str
 
+"""
+build_transcript converts trajectory messages_and_choices into string dialogue for judge to read.
 
+parameters: 
+trajectory - ART trajectory object to be converted
 
+returns - trajectory dialogue in string format
+"""
 def build_transcript(trajectory):
     trajectory_messages = trajectory.messages_and_choices
     prompt_str, buffer, agent_turn = [], [], 0
 
+    # buffer system allows for dialogue to be converted in blocks
     for m in trajectory_messages:
-        if is_trainable(m):
+        # detect if dialogue to be formatted is actually part of the chat or just a database result
+        # ART dialogues can be picked up as dicts
+        # if it is, store in a buffer til static agent's chat
+        if not isinstance(m, dict):
             buffer.append(m.message.content or "")
 
+        # if it is the static agent, flush (add the buffer in the dialog in)
         elif m["role"] == "user" and not m["content"].startswith("[Database Result]"):
             agent_turn += 1
             buffer, prompt_str = flush(agent_turn, prompt_str, buffer)
+            # add the static dialogue in 
             prompt_str.append(f"[Opponent Turn {agent_turn}]: {m['content']}")
 
     agent_turn += 1
@@ -114,11 +127,24 @@ def build_transcript(trajectory):
 
     return "\n".join(prompt_str)
 
+"""
+llm_judge to calculate debate quality score. The score is calculated as a rolling mean calculated per dialogue.
 
+paramters:
+trajectory - specified trajectory in question
+fact - the initial case facts
+
+returns:
+running_mean - the final rolling mean
+
+"""
 async def llm_judge(trajectory, fact):
+    # format judge prompt with specific case facts
     prompt = JUDGE_PROMPT.format(case_facts=fact,
                                  dialogue_history=build_transcript(trajectory))
+    
     output = {}
+    # retry 3 times due to API response unpredictability
     for attempt in range(3):
         try:
             output = await asyncio.to_thread(utils.chat_json,
@@ -127,30 +153,43 @@ async def llm_judge(trajectory, fact):
                 break
         except Exception as e:
             print(f"Judge attempt {attempt} failed: {e}")
+    # log failure to parse if any
     trajectory.metrics["judge_parse_failure"] = 0.0 if output else 1.0
     if not output:
         return np.array([0.0])
+    
     traj_results = []
     turn_evals = output.get("turn_evaluations", {})
     for key in turn_evals:
+        # get per-turn data
         turn_data = turn_evals[key]
         scores = turn_data.get("scores", {})
 
-        # Weighted Calculation
+        # weighted calculation
         total_score = 0.5 * float(scores.get("Q_rebuttal", 0.0)) + \
         0.25 * float(scores.get("Q_subsumption", 0.0)) + 0.15 * float(scores.get("Q_logic", 0.0)) + \
             0.1 * float(scores.get("Q_rhetoric", 0.0))
         traj_results.append(total_score)
 
     traj_np = np.array(traj_results)
-    # Get overall quality of the dialogue at each step
+    # calculate running mean
     running_mean = np.cumsum(traj_np) / np.arange(1, len(traj_np) + 1)
 
     return running_mean
 
+"""
+batch_score to allow for group-wide scoring of trajectories to increase efficiency.
+This is calculated after the milestone rewards at it scores the entire debate.
+
+parameters:
+group - the group of trajectories
+case - the case the trajectories are under
+
+returns:
+the group of trajectories with updated rewards
+
+"""
 async def batch_score(group, case):
-
-
     trajectories = list(group.trajectories)
     judge_results = await asyncio.gather(
         *(llm_judge(t, case["fact_clean"]) for t in trajectories)
@@ -159,7 +198,9 @@ async def batch_score(group, case):
     for i, t in enumerate(trajectories):
         milestone_reward = sum(t.metrics.get(f"turn_reward_{k}", 0.0)
                                for k in range(MAX_TURNS))
-        judge_score = float(judge_results[i][-1])   # final running mean
+        # get final running mean
+        judge_score = float(judge_results[i][-1])  
+        # update reward for current trajectory
         t.reward = judge_score + milestone_reward
         t.metrics["milestone_reward"] = milestone_reward
         t.metrics["judge_reward"] = judge_score
