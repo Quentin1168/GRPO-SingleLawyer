@@ -152,6 +152,14 @@ In `main()` inside `evaluate.py`, toggle between running the test set or re-gene
 python3 evaluate.py
 ```
 
+### Run demo
+
+To run the demo:
+
+```bash
+python3 demo.py
+```
+
 ---
 
 ## Project Structure
@@ -162,6 +170,9 @@ GRPO-SingleLawyer/
 ├── evaluate.py         # Evaluation benchmark and demo data generator
 ├── requirements.lock   # Pinned dependency lockfile
 ├── .env                # API keys and environment configuration (create this)
+├── ART_reward.py       # Reward calculation
+├── environment.py      # Trajectory rollout
+├── demo.py             # Demo UI
 └── README.md
 ```
 
