@@ -157,7 +157,7 @@ python3 evaluate.py
 To run the demo:
 
 ```bash
-python3 demo.py
+streamlit run demo.py
 ```
 
 ---
