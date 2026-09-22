@@ -7,28 +7,29 @@ import copy
 import streamlit as st
 
 st.set_page_config(page_title="GRPO-Lawyer Demo", layout="wide")
-
+# Set up hyperparams
 DEMO_FILE = "demo.jsonl"
 TRANSLATED_FILE = "translated.jsonl"
 AVATARS = {"assistant": "🧑‍⚖️", "user": "🧑‍💼", "system": "⚙️"}
 
-SRC_LANG = "zh"   # Argos code for Chinese (Simplified). Use "zt" for Traditional if your data is 繁體.
+SRC_LANG = "zh"   
 TGT_LANG = "en"
 
 CJK_RE = re.compile(r"[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]")
 DB_PREFIX = "[Database Result]"
 
 
-# ==========================================
-# 1. Argos Translate Engine
-# ==========================================
+"""
+Helper translation function using argotranslate for offline efficient translations.
+
+Downloads and installs the language package on first use (needs internet once).
+Gets Argos `Translation` object for zh→en.
+
+Returns: (translation, error_message).
+"""
 @st.cache_resource(show_spinner="Loading Argos Translate zh→en model…")
 def get_argos_translation():
-    """
-    Returns an Argos `Translation` object for zh→en.
-    Downloads and installs the language package on first use (needs internet once).
-    Returns (translation, error_message).
-    """
+
     try:
         import argostranslate.package
         import argostranslate.translate
@@ -47,7 +48,6 @@ def get_argos_translation():
     if tr is not None:
         return tr, None
 
-    # Not installed -> fetch the package from the Argos index
     try:
         argostranslate.package.update_package_index()
         available = argostranslate.package.get_available_packages()
@@ -71,11 +71,16 @@ def get_argos_translation():
     return tr, None
 
 
+"""
+Translation function that translates chinese text to english using argotranslate
+
+Translate a block of text while preserving line structure.
+Lines with no CJK characters (numbers, English, markdown rules…) are passed through untouched.
+
+Returns - Translated text
+"""
 def translate_text(text, translation, stats):
-    """
-    Translate a block of text while preserving line structure.
-    Lines with no CJK characters (numbers, English, markdown rules…) are passed through untouched.
-    """
+
     if not isinstance(text, str) or not text.strip():
         return text
 
@@ -107,11 +112,17 @@ def translate_text(text, translation, stats):
     return "\n".join(out_lines)
 
 
-# ==========================================
-# 2. Parsing helpers
-# ==========================================
+"""
+Function that extracts a clean list of individual milestone strings.
+Used to extract and translate the milestone strings from the json
+
+Parameters:
+raw - the raw text to be processed
+
+Returns:
+The list of individual milestone strings
+"""
 def parse_zh_milestones(raw):
-    """Extracts a clean list of individual milestone strings."""
     if raw is None:
         return []
     if isinstance(raw, list):
@@ -142,9 +153,18 @@ def parse_zh_milestones(raw):
 
     return [text.strip(" '\"[]")]
 
+"""
+Function that translates the text blocks or milestone strings
 
+Parameters:
+content - the content to be translated
+translation - argotranslate item
+stats - statistics item
+
+Returns:
+content - the translated content
+"""
 def translate_message_content(content, translation, stats):
-    """Handles str content, the [Database Result] prefix, and list-of-parts content."""
     if isinstance(content, str):
         if content.startswith(DB_PREFIX):
             _, _, body = content.partition(":")
@@ -167,11 +187,13 @@ def translate_message_content(content, translation, stats):
     return content
 
 
-# ==========================================
-# 3. Build translated.jsonl
-# ==========================================
+"""
+Function which generates the translated en jsonl file.
+
+Returns:
+True/False - Whether the translated file was successfully translated
+"""
 def generate_translated_file():
-    """Translates demo.jsonl → translated.jsonl with Argos. Returns True on success."""
     if not os.path.exists(DEMO_FILE):
         st.error(f"Source file `{DEMO_FILE}` not found.")
         return False
@@ -265,7 +287,6 @@ def load_file(path):
 
 
 def count_cjk_cases(cases):
-    """How many cases in a list still contain Chinese in fact/messages."""
     n = 0
     for c in cases:
         blob = json.dumps(c, ensure_ascii=False)
@@ -274,9 +295,7 @@ def count_cjk_cases(cases):
     return n
 
 
-# ==========================================
-# 4. Data loading
-# ==========================================
+# Data Loading
 if not os.path.exists(TRANSLATED_FILE):
     generate_translated_file()
 
@@ -293,9 +312,7 @@ if st.session_state.selected_case_idx >= len(raw_zh_cases):
     st.session_state.selected_case_idx = 0
 
 
-# ==========================================
-# 5. UI Localization
-# ==========================================
+# Set up UI alternate texts for both languages
 I18N = {
     "en": {
         "title": "GRPO-Lawyer",
@@ -340,9 +357,7 @@ I18N = {
 }
 
 
-# ==========================================
-# 6. Sidebar
-# ==========================================
+# Set up UI using Streamlit
 with st.sidebar:
     st.title("GRPO-Lawyer")
 
@@ -356,7 +371,6 @@ with st.sidebar:
         if generate_translated_file():
             st.rerun()
 
-    # Pick dataset — loudly, never silently
     if lang_key == "en":
         if not raw_en_cases:
             st.warning(t["no_translation"])
@@ -395,9 +409,7 @@ with st.sidebar:
     board_container = st.container()
 
 
-# ==========================================
-# 7. Case data & render helpers
-# ==========================================
+
 if lang_key == "zh":
     milestones = parse_zh_milestones(zh_case.get("milestones", []))
 else:
@@ -430,7 +442,13 @@ def turns_completed(current_message):
         1 for i, m in enumerate(messages) if m.get("role") == "assistant" and i < current_message
     )
 
+"""
+Function that draws the board
 
+Parameters:
+container - the streamlit container item
+current_turn - the current turn of the recorded debate
+"""
 def render_board(container, current_turn):
     with container:
         container.empty()
@@ -448,7 +466,14 @@ def render_board(container, current_turn):
         total_items = max(len(milestones) + 1, 1)
         st.progress((completed + int(law_checked)) / total_items)
 
+"""
+Function that draws new messages based on the turn
 
+Parameters:
+container - the streamlit container item
+current_msg_idx - the current message turn iterated
+
+"""
 def render_chat(container, current_msg_idx):
     with container:
         for m in messages[:current_msg_idx]:
@@ -465,9 +490,7 @@ def render_chat(container, current_msg_idx):
                 st.markdown(content)
 
 
-# ==========================================
-# 8. Main view & playback
-# ==========================================
+
 st.header(f"{t['case_prefix']}{case.get('case_id', '')}")
 with st.expander(t["case_facts"], expanded=False):
     st.write(case.get("fact", ""))
@@ -492,9 +515,8 @@ else:
     render_board(board_container, turns_completed(current))
 
 
-# ==========================================
-# 9. Metrics footer
-# ==========================================
+
+# Set up footer that shows metrics
 st.divider()
 mc = case.get("metrics", {})
 c1, c2, c3, c4 = st.columns(4)
